@@ -8,25 +8,22 @@ namespace NuovaGM.Server.Veicoli
 	internal class ParkServer : BaseScript
 	{
 		public ParkServer()
-			: this()
 		{
-			((BaseScript)this).get_EventHandlers().Add("FerrisWheel:syncState", (Delegate)new Action<Player, string, int>(SyncRuotaPan));
-			((BaseScript)this).get_EventHandlers().Add("FerrisWheel:StopWheel", (Delegate)new Action<bool>(FermaRuota));
-			((BaseScript)this).get_EventHandlers().Add("FerrisWheel:UpdateCabins", (Delegate)new Action<int, int>(UpdateCabins));
-			((BaseScript)this).get_EventHandlers().Add("FerrisWheel:playerGetOff", (Delegate)new Action<Player, int, int>(RuotaGetOff));
-			((BaseScript)this).get_EventHandlers().Add("FerrisWheel:playerGetOn", (Delegate)new Action<Player, int, int>(RuotaGetOn));
-			((BaseScript)this).get_EventHandlers().Add("FerrisWheel:updateGradient", (Delegate)new Action<Player, int>(UpdateGradient));
-			((BaseScript)this).get_EventHandlers().Add("RollerCoaster:playerGetOff", (Delegate)new Action<Player, int>(MontagneGetOff));
-			((BaseScript)this).get_EventHandlers().Add("RollerCoaster:playerGetOn", (Delegate)new Action<Player, int, int, int>(MontagneGetOn));
-			((BaseScript)this).get_EventHandlers().Add("RollerCoaster:syncState", (Delegate)new Action<Player, string>(SyncMontagne));
-			((BaseScript)this).get_EventHandlers().Add("RollerCoaster:SyncCars", (Delegate)new Action<int, int>(SyncCars));
+			this.EventHandlers.Add("FerrisWheel:syncState", (Delegate)new Action<Player, string, int>(SyncRuotaPan));
+			this.EventHandlers.Add("FerrisWheel:StopWheel", (Delegate)new Action<bool>(FermaRuota));
+			this.EventHandlers.Add("FerrisWheel:UpdateCabins", (Delegate)new Action<int, int>(UpdateCabins));
+			this.EventHandlers.Add("FerrisWheel:playerGetOff", (Delegate)new Action<Player, int, int>(RuotaGetOff));
+			this.EventHandlers.Add("FerrisWheel:playerGetOn", (Delegate)new Action<Player, int, int>(RuotaGetOn));
+			this.EventHandlers.Add("FerrisWheel:updateGradient", (Delegate)new Action<Player, int>(UpdateGradient));
+			this.EventHandlers.Add("RollerCoaster:playerGetOff", (Delegate)new Action<Player, int>(MontagneGetOff));
+			this.EventHandlers.Add("RollerCoaster:playerGetOn", (Delegate)new Action<Player, int, int, int>(MontagneGetOn));
+			this.EventHandlers.Add("RollerCoaster:syncState", (Delegate)new Action<Player, string>(SyncMontagne));
+			this.EventHandlers.Add("RollerCoaster:SyncCars", (Delegate)new Action<int, int>(SyncCars));
 		}
 
 		private void UpdateGradient([FromSource] Player player, int gradient)
 		{
-			if ((from x in ((IEnumerable<Player>)((BaseScript)this).get_Players()).ToList()
-				orderby x.get_Handle()
-				select x).FirstOrDefault() == player)
+			if (Players.OrderBy(x => x.Handle).FirstOrDefault() == player)
 			{
 				BaseScript.TriggerClientEvent("FerrisWheel:UpdateGradient", new object[1] { gradient });
 			}
@@ -34,9 +31,7 @@ namespace NuovaGM.Server.Veicoli
 
 		public void SyncRuotaPan([FromSource] Player p, string state, int Player)
 		{
-			if ((from x in ((IEnumerable<Player>)((BaseScript)this).get_Players()).ToList()
-				orderby x.get_Handle()
-				select x).FirstOrDefault() == p)
+			if (Players.OrderBy(x => x.Handle).FirstOrDefault() == p)
 			{
 				BaseScript.TriggerClientEvent("FerrisWheel:forceState", new object[1] { state });
 			}
@@ -44,9 +39,7 @@ namespace NuovaGM.Server.Veicoli
 
 		public void SyncMontagne([FromSource] Player p, string state)
 		{
-			if ((from x in ((IEnumerable<Player>)((BaseScript)this).get_Players()).ToList()
-				orderby x.get_Handle()
-				select x).FirstOrDefault() == p)
+			if (Players.OrderBy(x => x.Handle).FirstOrDefault() == p)
 			{
 				BaseScript.TriggerClientEvent("RollerCoaster:forceState", new object[1] { state });
 			}

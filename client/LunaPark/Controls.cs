@@ -1,48 +1,68 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public static class Controls
 	{
-		private static readonly Control[] NecessaryControlsKeyboard;
+		// Liste blanche des contrôles à réactiver quand on désactive les autres.
+		// Clavier/souris: navigation menu + clics + molette + épaules pour l'onglet
+		private static readonly Control[] NecessaryControlsKeyboard =
+		[
+			// Navigation
+			(Control)172, // Up
+			(Control)173, // Down
+			(Control)174, // Left
+			(Control)175, // Right
+			(Control)201, // Select/Accept
+			(Control)177, // Back/Cancel
+			(Control)199, // Pause/Menu Back (PC)
+			(Control)205, // Shoulder Left (onglet précédent)
+			(Control)206, // Shoulder Right (onglet suivant)
 
-		private static readonly Control[] NecessaryControlsGamePad;
+			// Souris
+			(Control)239, // Mouse X
+			(Control)240, // Mouse Y
+			(Control)241, // Wheel Up
+			(Control)242, // Wheel Down
+			(Control)237, // Mouse LMB
+			(Control)238, // Mouse RMB
+		];
+
+		// Manette: navigation menu + épaules
+		private static readonly Control[] NecessaryControlsGamePad =
+		[
+			(Control)172, // Up
+			(Control)173, // Down
+			(Control)174, // Left
+			(Control)175, // Right
+			(Control)201, // Select/Accept (A)
+			(Control)177, // Back/Cancel (B)
+			(Control)205, // LB
+			(Control)206, // RB
+		];
 
 		public static void Toggle(bool toggle)
 		{
-			//IL_0019: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001f: Invalid comparison between Unknown and I4
-			//IL_0038: Unknown result type (might be due to invalid IL or missing references)
-			//IL_003b: Unknown result type (might be due to invalid IL or missing references)
-			//IL_0043: Expected I4, but got Unknown
 			if (toggle)
 			{
 				Game.EnableAllControlsThisFrame(2);
 				return;
 			}
+
 			Game.DisableAllControlsThisFrame(2);
-			Control[] list = (((int)Game.get_CurrentInputMode() == 1) ? NecessaryControlsGamePad : NecessaryControlsKeyboard);
-			Control[] array = list;
-			foreach (Control control in array)
+
+			Control[] list = (Game.CurrentInputMode == InputMode.GamePad)
+				? NecessaryControlsGamePad
+				: NecessaryControlsKeyboard;
+
+			foreach (Control control in list)
 			{
 				API.EnableControlAction(0, (int)control, true);
 			}
-		}
-
-		static Controls()
-		{
-			Control[] array = new Control[27];
-			RuntimeHelpers.InitializeArray(array, (RuntimeFieldHandle)/*OpCode not supported: LdMemberToken*/);
-			NecessaryControlsKeyboard = (Control[])(object)array;
-			Control[] necessaryControlsKeyboard = NecessaryControlsKeyboard;
-			Control[] array2 = new Control[4];
-			RuntimeHelpers.InitializeArray(array2, (RuntimeFieldHandle)/*OpCode not supported: LdMemberToken*/);
-			NecessaryControlsGamePad = necessaryControlsKeyboard.Concat((IEnumerable<Control>)(object)array2).ToArray();
 		}
 	}
 }

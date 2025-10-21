@@ -2,14 +2,16 @@
   <PropertyGroup>
     <AssemblyName>Client.net</AssemblyName>
     <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net48</TargetFramework>
   </PropertyGroup>
   <PropertyGroup>
     <LangVersion>Preview</LangVersion>
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Client" Version="1.0.21130" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="CitizenFX.Core.Client" />
     <Reference Include="System.Core" />

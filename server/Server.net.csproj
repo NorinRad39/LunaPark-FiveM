@@ -10,7 +10,9 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup />
-  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="CitizenFX.Core.Server" Version="1.0.21130" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="CitizenFX.Core.Server" />
   </ItemGroup>

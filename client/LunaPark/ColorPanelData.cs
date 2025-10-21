@@ -1,11 +1,16 @@
 using System.Collections.Generic;
 using System.Drawing;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
+	public class Pagination
+	{
+		// Ajoutez ici les membres nécessaires selon vos besoins
+	}
+
 	public class ColorPanelData
 	{
-		public Pagination Pagination = new Pagination();
+		public Pagination Pagination = new();
 
 		public int Index;
 

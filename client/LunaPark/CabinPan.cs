@@ -1,25 +1,24 @@
 using CitizenFX.Core;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
-	internal class CabinPan
-	{
-		public Prop Entity = new Prop(0);
+    internal class CabinPan
+    {
+        public int Index { get; set; }
+        public int NPlayer { get; set; }
+        public Prop Entity { get; set; }
+        public float Gradient { get; set; }
 
-		public int Index;
+        public CabinPan(int index) : this()
+        {
+            Index = index;
+        }
 
-		public bool PlayerInside = false;
-
-		public int NPlayer = 0;
-
-		public float Gradient;
-
-		public CabinPan(int index)
-		{
-			//IL_0002: Unknown result type (might be due to invalid IL or missing references)
-			//IL_000c: Expected O, but got Unknown
-			Index = index;
-			Gradient = 22.5f * (float)Index;
-		}
-	}
+        public CabinPan()
+        {
+            NPlayer = 0;
+            Entity = null;
+            Gradient = 0f;
+        }
+    }
 }

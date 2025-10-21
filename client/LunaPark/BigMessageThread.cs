@@ -1,22 +1,23 @@
 using System;
 using System.Threading.Tasks;
 using CitizenFX.Core;
+using Client.net.LunaPark;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class BigMessageThread : BaseScript
 	{
 		public static BigMessageHandler MessageInstance { get; set; }
 
 		public BigMessageThread()
-			: this()
 		{
 			MessageInstance = new BigMessageHandler();
-			((BaseScript)this).add_Tick((Func<Task>)BigMessageThread_Tick);
+			this.Tick += BigMessageThread_Tick;
 		}
 
 		private async Task BigMessageThread_Tick()
 		{
+			await Task.Yield();
 			MessageInstance.Update();
 		}
 	}
