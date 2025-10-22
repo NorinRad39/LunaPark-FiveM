@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Text;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using GdiFont = System.Drawing.Font;
+using UiFont = CitizenFX.Core.UI.Font; // utiliser GdiFont ou UiFont pour lever l'ambiguïté
 
 namespace LunaPark
 {

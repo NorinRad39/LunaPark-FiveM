@@ -3,6 +3,7 @@ using System.Drawing;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using Font = CitizenFX.Core.UI.Font;
 
 namespace LunaPark
 {
@@ -12,8 +13,8 @@ namespace LunaPark
 		{
 			get
 			{
-				int screenw = Screen.get_Resolution().Width;
-				int screenh = Screen.get_Resolution().Height;
+				int screenw = Screen.Resolution.Width;
+				int screenh = Screen.Resolution.Height;
 				float ratio = (float)screenw / (float)screenh;
 				float width = 1080f * ratio;
 				return new SizeF(width, 1080f);
@@ -28,8 +29,8 @@ namespace LunaPark
 				double g = Math.Round(Convert.ToDouble(t), 2);
 				g = g * 100.0 - 90.0;
 				g = 10.0 - g;
-				int screenw = Screen.get_Resolution().Width;
-				int screenh = Screen.get_Resolution().Height;
+				int screenw = Screen.Resolution.Width;
+				int screenh = Screen.Resolution.Height;
 				float ratio = (float)screenw / (float)screenh;
 				float wmp = ratio * 5.4f;
 				return new PointF((float)g * wmp, (float)g * 5.4f);

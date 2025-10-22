@@ -10,7 +10,7 @@ namespace Client.net.LunaPark
 {
     internal class FerrisWheel : BaseScript
     {
-        private WheelPan Wheel = new WheelPan(null, 0, "IDLE");
+        private readonly WheelPan Wheel = new WheelPan(null, 0, "IDLE");
 
         public bool RideEnd = true;
 
@@ -20,15 +20,15 @@ namespace Client.net.LunaPark
 
         private Camera Cam1 = new Camera(0);
 
-        private FerrisWheelCamKeyboard Cam2Keyvoard = new FerrisWheelCamKeyboard();
+        private readonly FerrisWheelCamKeyboard Cam2Keyvoard = new();
 
-        private FerrisWheelCamGamePad Cam2GamePad = new FerrisWheelCamGamePad();
+        private readonly FerrisWheelCamGamePad Cam2GamePad = new();
 
         private int iLocal_355 = 0;
 
         private CabinPan ActualCabin;
 
-        private CabinPan[] Cabins = new CabinPan[16]
+        private readonly CabinPan[] Cabins = new CabinPan[16]
         {
             new CabinPan(0),
             new CabinPan(1),
@@ -73,14 +73,14 @@ namespace Client.net.LunaPark
             val.IsShortRange = true;
             val.Name = "Ferris Wheel";
             Blip Ferris = val;
-            API.SetBlipDisplay(((PoolObject)Ferris).Handle, 4);
+            API.SetBlipDisplay(Ferris.Handle, 4);
             CaricaTutto();
         }
 
         private async void UpdateGradient(int gradient)
         {
             Wheel.Gradient = gradient;
-            await Task.FromResult(0);
+            await Task.CompletedTask;
         }
 
         private async Task SpawnaWheel()
@@ -219,7 +219,7 @@ namespace Client.net.LunaPark
         {
             Ped Char = (Ped)Entity.FromNetworkId(player);
             CabinPan Cabin = Cabins[cab];
-            if (!API.IsEntityAtCoord(((PoolObject)Char).Handle, -1661.95f, -1127.011f, 12.6973f, 1f, 1f, 1f, false, true, 0))
+            if (!API.IsEntityAtCoord(Char.Handle, -1661.95f, -1127.011f, 12.6973f, 1f, 1f, 1f, false, true, 0))
             {
                 return;
             }
@@ -233,36 +233,36 @@ namespace Client.net.LunaPark
             BaseScript.TriggerServerEvent("FerrisWheel:StopWheel", new object[1] { true });
             Wheel.Ferma = true;
             await BaseScript.Delay(100);
-            Vector3 coord = API.GetOffsetFromEntityInWorldCoords(((PoolObject)Cabin.Entity).get_Handle(), 0f, 0f, 0f);
+            Vector3 coord = API.GetOffsetFromEntityInWorldCoords(Cabin.Entity.Handle, 0f, 0f, 0f);
             int uLocal_377 = API.NetworkCreateSynchronisedScene(coord.X, coord.Y, coord.Z, 0f, 0f, 0f, 2, true, false, 1.06535322E+09f, 0f, 1.06535322E+09f);
-            API.NetworkAddPedToSynchronisedScene(((PoolObject)Char).get_Handle(), uLocal_377, "anim@mp_ferris_wheel", "enter_player_one", 8f, -8f, 131072, 0, 1.14884608E+09f, 0);
+            API.NetworkAddPedToSynchronisedScene(Char.Handle, uLocal_377, "anim@mp_ferris_wheel", "enter_player_one", 8f, -8f, 131072, 0, 1.14884608E+09f, 0);
             API.NetworkStartSynchronisedScene(uLocal_377);
             int iVar2 = API.NetworkConvertSynchronisedSceneToSynchronizedScene(uLocal_377);
             if (API.GetSynchronizedScenePhase(iVar2) > 0.99f)
             {
                 uLocal_377 = API.NetworkCreateSynchronisedScene(coord.X, coord.Y, coord.Z, 0f, 0f, 0f, 2, true, false, 1.06535322E+09f, 0f, 1.06535322E+09f);
-                API.NetworkAddPedToSynchronisedScene(((PoolObject)Char).get_Handle(), uLocal_377, "anim@mp_ferris_wheel", "enter_player_one", 8f, -8f, 131072, 0, 1.14884608E+09f, 0);
+                API.NetworkAddPedToSynchronisedScene(Char.Handle, uLocal_377, "anim@mp_ferris_wheel", "enter_player_one", 8f, -8f, 131072, 0, 1.14884608E+09f, 0);
                 API.NetworkStartSynchronisedScene(uLocal_377);
             }
             await BaseScript.Delay(7000);
-            Vector3 attCoords = API.GetOffsetFromEntityGivenWorldCoords(((PoolObject)Cabin.Entity).get_Handle(), ((Entity)Game.get_PlayerPed()).get_Position().X, ((Entity)Game.get_PlayerPed()).get_Position().Y, ((Entity)Game.get_PlayerPed()).get_Position().Z);
-            API.AttachEntityToEntity(((PoolObject)Char).get_Handle(), ((PoolObject)Cabin.Entity).get_Handle(), 0, attCoords.X, attCoords.Y, attCoords.Z, 0f, 0f, ((Entity)Game.get_PlayerPed()).get_Heading(), false, false, false, false, 2, true);
+            Vector3 attCoords = API.GetOffsetFromEntityGivenWorldCoords(Cabin.Entity.Handle, ((Entity)Game.PlayerPed).Position.X, ((Entity)Game.PlayerPed).Position.Y, ((Entity)Game.PlayerPed).Position.Z);
+            API.AttachEntityToEntity(Char.Handle, Cabin.Entity.Handle, 0, attCoords.X, attCoords.Y, attCoords.Z, 0f, 0f, Game.PlayerPed.Heading, false, false, false, false, 2, true);
             BaseScript.TriggerServerEvent("FerrisWheel:UpdateCabins", new object[2] { Cabin.Index, Cabin.NPlayer });
-            if (((PoolObject)Char).get_Handle() == API.PlayerPedId())
+            if (((PoolObject)Char).Handle == API.PlayerPedId())
             {
                 RideEnd = false;
             }
             Wheel.State = "IDLE";
             BaseScript.TriggerServerEvent("FerrisWheel:StopWheel", new object[1] { false });
             int iLocal_297 = API.GetSoundId();
-            API.PlaySoundFromEntity(iLocal_297, "GENERATOR", ((PoolObject)Wheel.Entity).get_Handle(), "THE_FERRIS_WHALE_SOUNDSET", false, 0);
+            API.PlaySoundFromEntity(iLocal_297, "GENERATOR", Wheel.Entity.Handle, "THE_FERRIS_WHALE_SOUNDSET", false, 0);
             int iLocal_299 = API.GetSoundId();
-            API.PlaySoundFromEntity(iLocal_299, "SLOW_SQUEAK", ((PoolObject)Wheel.Entity).get_Handle(), "THE_FERRIS_WHALE_SOUNDSET", false, 0);
+            API.PlaySoundFromEntity(iLocal_299, "SLOW_SQUEAK", Wheel.Entity.Handle, "THE_FERRIS_WHALE_SOUNDSET", false, 0);
             int iLocal_300 = API.GetSoundId();
-            API.PlaySoundFromEntity(iLocal_300, "SLOW_SQUEAK", ((PoolObject)Cabins[1].Entity).get_Handle(), "THE_FERRIS_WHALE_SOUNDSET", false, 0);
+            API.PlaySoundFromEntity(iLocal_300, "SLOW_SQUEAK", Cabins[1].Entity.Handle, "THE_FERRIS_WHALE_SOUNDSET", false, 0);
             int iLocal_298 = API.GetSoundId();
-            API.PlaySoundFromEntity(iLocal_298, "CARRIAGE", ((PoolObject)Cabins[1].Entity).get_Handle(), "THE_FERRIS_WHALE_SOUNDSET", false, 0);
-            if (((PoolObject)Char).get_Handle() == API.PlayerPedId())
+            API.PlaySoundFromEntity(iLocal_298, "CARRIAGE", Cabins[1].Entity.Handle, "THE_FERRIS_WHALE_SOUNDSET", false, 0);
+            if (((PoolObject)Char).Handle == API.PlayerPedId())
             {
                 CreaCam();
             }
@@ -272,7 +272,7 @@ namespace Client.net.LunaPark
         {
             Ped Char = (Ped)Entity.FromNetworkId(player);
             CabinPan Cabin = Cabins[cab];
-            if ((Entity)(object)Char == (Entity)(object)Game.get_PlayerPed())
+            if ((Entity)(object)Char == (Entity)(object)Game.PlayerPed)
             {
                 while (ActualCabin != Cabin)
                 {
@@ -280,11 +280,11 @@ namespace Client.net.LunaPark
                 }
                 API.RenderScriptCams(false, false, 1000, false, false);
                 BaseScript.TriggerServerEvent("FerrisWheel:StopWheel", new object[1] { true });
-                Vector3 offset2 = API.GetOffsetFromEntityInWorldCoords(((PoolObject)Cabin.Entity).get_Handle(), 0f, 0f, 0f);
+                Vector3 offset2 = API.GetOffsetFromEntityInWorldCoords(Cabin.Entity.Handle, 0f, 0f, 0f);
                 ((PoolObject)Cam1).Delete();
                 API.DestroyAllCams(false);
                 int uLocal_378 = API.NetworkCreateSynchronisedScene(offset2.X, offset2.Y, offset2.Z, 0f, 0f, 0f, 2, false, false, 1.06535322E+09f, 0f, 1.06535322E+09f);
-                API.NetworkAddPedToSynchronisedScene(((PoolObject)Char).get_Handle(), uLocal_378, "anim@mp_ferris_wheel", "exit_player_one", 8f, -8f, 131072, 0, 1.14884608E+09f, 0);
+                API.NetworkAddPedToSynchronisedScene(Char.Handle, uLocal_378, "anim@mp_ferris_wheel", "exit_player_one", 8f, -8f, 131072, 0, 1.14884608E+09f, 0);
                 API.NetworkStartSynchronisedScene(uLocal_378);
                 ((Entity)Char).Detach();
                 await BaseScript.Delay(5000);
@@ -298,7 +298,7 @@ namespace Client.net.LunaPark
                 {
                     API.StopAudioScene("FAIRGROUND_RIDES_FERRIS_WHALE_ALTERNATIVE_VIEW");
                 }
-                if (((PoolObject)Char).get_Handle() == API.PlayerPedId())
+                if (((PoolObject)Char).Handle == API.PlayerPedId())
                 {
                     RideEnd = true;
                 }
@@ -307,16 +307,16 @@ namespace Client.net.LunaPark
                 ActualCabin = null;
                 return;
             }
-            if (((Entity)Char).get_NetworkId() != ((Entity)Game.get_PlayerPed()).get_NetworkId() && !API.NetworkHasControlOfNetworkId(player))
+            if (((Entity)Char).NetworkId != ((Entity)Game.PlayerPed).NetworkId && !API.NetworkHasControlOfNetworkId(player))
             {
                 while (!API.NetworkRequestControlOfNetworkId(player))
                 {
                     await BaseScript.Delay(0);
                 }
             }
-            Vector3 offset = API.GetOffsetFromEntityInWorldCoords(((PoolObject)Cabin.Entity).get_Handle(), 0f, 0f, 0f);
+            Vector3 offset = API.GetOffsetFromEntityInWorldCoords(Cabin.Entity.Handle, 0f, 0f, 0f);
             int uLocal_377 = API.NetworkCreateSynchronisedScene(offset.X, offset.Y, offset.Z, 0f, 0f, 0f, 2, false, false, 1.06535322E+09f, 0f, 1.06535322E+09f);
-            API.NetworkAddPedToSynchronisedScene(((PoolObject)Char).get_Handle(), uLocal_377, "anim@mp_ferris_wheel", "exit_player_one", 8f, -8f, 131072, 0, 1.14884608E+09f, 0);
+            API.NetworkAddPedToSynchronisedScene(Char.Handle, uLocal_377, "anim@mp_ferris_wheel", "exit_player_one", 8f, -8f, 131072, 0, 1.14884608E+09f, 0);
             API.NetworkStartSynchronisedScene(uLocal_377);
             ((Entity)Char).Detach();
             await BaseScript.Delay(5000);
@@ -326,13 +326,13 @@ namespace Client.net.LunaPark
 
         private async Task ControlloPlayer()
         {
-            if (((Entity)Game.get_PlayerPed()).IsInRangeOf(new Vector3(-1661.95f, -1127.011f, 12.6973f), 20f))
+            if (((Entity)Game.PlayerPed).IsInRangeOf(new Vector3(-1661.95f, -1127.011f, 12.6973f), 20f))
             {
                 if (!API.IsAudioSceneActive("FAIRGROUND_RIDES_FERRIS_WHALE"))
                 {
                     API.StartAudioScene("FAIRGROUND_RIDES_FERRIS_WHALE");
                 }
-                if (((Entity)Game.get_PlayerPed()).IsInRangeOf(new Vector3(-1661.95f, -1127.011f, 12.6973f), 1.375f))
+                if (((Entity)Game.PlayerPed).IsInRangeOf(new Vector3(-1661.95f, -1127.011f, 12.6973f), 1.375f))
                 {
                     Screen.DisplayHelpTextThisFrame("Press ~INPUT_CONTEXT~ to get on the Wheel");
                     if (Game.IsControlJustPressed(0, (Control)51))
@@ -372,7 +372,7 @@ namespace Client.net.LunaPark
             if (!Scaleform)
             {
                 Buttons = new Scaleform("instructional_buttons");
-                while (!API.HasScaleformMovieLoaded(Buttons.get_Handle()))
+                while (!API.HasScaleformMovieLoaded(Buttons.Handle))
                 {
                     await BaseScript.Delay(0);
                 }
@@ -403,14 +403,14 @@ namespace Client.net.LunaPark
         private async void func_145(int i)
         {
             Vector3 offset = func_147(i);
-            API.SetEntityCoordsNoOffset(((PoolObject)Cabins[i].Entity).get_Handle(), offset.X, offset.Y, offset.Z, true, false, false);
+            API.SetEntityCoordsNoOffset(Cabins[i].Entity.Handle, offset.X, offset.Y, offset.Z, true, false, false);
         }
 
         private void func_79()
         {
             if (API.IsAudioSceneActive("FAIRGROUND_RIDES_FERRIS_WHALE"))
             {
-                API.StopAudioScene("FAIRGROUND_RIDES_FERRIS_WHALE");
+                API.StopAudioScene("FAIRGROUND_Rides_FERRIS_WHALE");
             }
             API.StartAudioScene("FAIRGROUND_RIDES_FERRIS_WHALE_ALTERNATIVE_VIEW");
         }
@@ -419,7 +419,7 @@ namespace Client.net.LunaPark
         {
             Cam1 = new Camera(API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -1703.854f, -1082.222f, 42.006f, -8.3096f, 0f, -111.8213f, 50f, false, 0));
             Cam1.PointAt((Entity)(object)Wheel.Entity, default(Vector3));
-            Cam1.set_IsActive(true);
+            Cam1.IsActive = true;
             API.DoScreenFadeOut(500); 
             await BaseScript.Delay(800);
             API.RenderScriptCams(true, false, 1000, false, false);
@@ -472,7 +472,7 @@ namespace Client.net.LunaPark
                 Cam1 = new Camera(API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", -1703.854f, -1082.222f, 42.006f, -8.3096f, 0f, -111.8213f, 50f, false, 0));
                 Cam1.PointAt((Entity)(object)Wheel.Entity, default(Vector3));
                 func_79();
-                Cam1.set_IsActive(true);
+                Cam1.IsActive = true;
                 Tick -= Cam2Controller;
                 if (API.IsInputDisabled(2))
                 {
@@ -506,11 +506,11 @@ namespace Client.net.LunaPark
                     Vector3 PedCoords = API.GetPedBoneCoords(API.PlayerPedId(), 31086, 0f, 0.2f, 0f);
                     Vector3 Rot = API.GetEntityRotation(API.PlayerPedId(), 2);
                     Cam2Keyvoard.CamEntity = new Camera(API.CreateCam("DEFAULT_SCRIPTED_CAMERA", false));
-                    API.SetCamParams(((PoolObject)Cam2Keyvoard.CamEntity).get_Handle(), PedCoords.X, PedCoords.Y, PedCoords.Z, Rot.X, Rot.Y, Rot.Z, 50f, 0, 1, 1, 2);
-                    Cam2Keyvoard.CamEntity.set_IsActive(true);
+                    API.SetCamParams(((PoolObject)Cam2Keyvoard.CamEntity).Handle, PedCoords.X, PedCoords.Y, PedCoords.Z, Rot.X, Rot.Y, Rot.Z, 50f, 0, 1, 1, 2);
+                    Cam2Keyvoard.CamEntity.IsActive = true;
                     Cam2Keyvoard.CamEntity.Shake((CameraShake)0, 0.19f);
-                    API.SetCamNearClip(((PoolObject)Cam2Keyvoard.CamEntity).get_Handle(), -1.08213043E+09f);
-                    API.AttachCamToPedBone(((PoolObject)Cam2Keyvoard.CamEntity).get_Handle(), API.PlayerPedId(), 31086, 0f, 0.2f, 0f, true);
+                    API.SetCamNearClip(((PoolObject)Cam2Keyvoard.CamEntity).Handle, -1.08213043E+09f);
+                    API.AttachCamToPedBone(((PoolObject)Cam2Keyvoard.CamEntity).Handle, API.PlayerPedId(), 31086, 0f, 0.2f, 0f, true);
                     API.SetLocalPlayerInvisibleLocally(false);
                     Cam2Keyvoard.Value1 = PedCoords;
                     Cam2Keyvoard.Value4 = Rot;
@@ -623,17 +623,17 @@ namespace Client.net.LunaPark
                 uParam0.Value13 += fVar3;
                 uParam0.Value13 = func_102(uParam0.Value13, 20f, 50f);
             }
-            if (API.DoesCamExist(((PoolObject)uParam0.CamEntity).get_Handle()))
+            if (API.DoesCamExist(((PoolObject)uParam0.CamEntity).Handle))
             {
-                API.SetCamFov(((PoolObject)uParam0.CamEntity).get_Handle(), uParam0.Value13);
+                API.SetCamFov(((PoolObject)uParam0.CamEntity).Handle, uParam0.Value13);
                 if (API.IsEntityDead(uParam0.Value8) && !API.IsEntityDead(API.PlayerPedId()))
                 {
-                    API.SetCamRot(((PoolObject)uParam0.CamEntity).get_Handle(), (((Entity)Game.get_PlayerPed()).get_Rotation() + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).X, (((Entity)Game.get_PlayerPed()).get_Rotation() + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Y, (((Entity)Game.get_PlayerPed()).get_Rotation() + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Z, 2);
+                    API.SetCamRot(((PoolObject)uParam0.CamEntity).Handle, (((Entity)Game.PlayerPed).Rotation + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).X, (((Entity)Game.PlayerPed).Rotation + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Y, (((Entity)Game.PlayerPed).Rotation + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Z, 2);
                 }
                 else if (!API.IsEntityDead(uParam0.Value8) && !API.IsEntityDead(API.PlayerPedId()))
                 {
                     func_106(API.GetEntityCoords(uParam0.Value8, true), API.GetEntityCoords(uParam0.Value9, true), ref uVar0, ref uVar1, 1);
-                    API.SetCamRot(((PoolObject)uParam0.CamEntity).get_Handle(), (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).X, (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Y, (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Z, 2);
+                    API.SetCamRot(((PoolObject)uParam0.CamEntity).Handle, (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).X, (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Y, (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Z, 2);
                 }
             }
         }
@@ -705,19 +705,19 @@ namespace Client.net.LunaPark
                 return 0;
             }
             uParam0.Value13 = 50f;
-            if (!API.DoesCamExist(((PoolObject)uParam0.CamEntity).get_Handle()))
+            if (!API.DoesCamExist(((PoolObject)uParam0.CamEntity).Handle))
             {
                 uParam0.CamEntity = new Camera(API.CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", uParam0.Value2.X, uParam0.Value2.Y, uParam0.Value2.Z, uParam0.Value5.X, uParam0.Value5.Y, uParam0.Value5.Z, 50f, true, 2));
             }
             if (uParam0.Value0)
             {
-                API.AttachCamToPedBone(((PoolObject)uParam0.CamEntity).get_Handle(), API.PlayerPedId(), 31086, 0f, 0.2f, 0f, true);
+                API.AttachCamToPedBone(((PoolObject)uParam0.CamEntity).Handle, API.PlayerPedId(), 31086, 0f, 0.2f, 0f, true);
                 uParam0.Value11 = 0f;
                 uParam0.Value12 = 0f;
             }
-            if (API.DoesCamExist(((PoolObject)uParam0.CamEntity).get_Handle()))
+            if (API.DoesCamExist(((PoolObject)uParam0.CamEntity).Handle))
             {
-                API.SetCamActive(((PoolObject)uParam0.CamEntity).get_Handle(), true);
+                API.SetCamActive(((PoolObject)uParam0.CamEntity).Handle, true);
             }
             return 1;
         }
@@ -891,8 +891,8 @@ namespace Client.net.LunaPark
                 }
             }
             uParam0.Value18 += (uParam0.Value17 - uParam0.Value18) * 0.06f * fVar5;
-            API.SetCamParams(((PoolObject)uParam0.CamEntity).get_Handle(), uParam0.Value1.X, uParam0.Value1.Y, uParam0.Value1.Z, (uParam0.Value4 + uParam0.Value14).X, (uParam0.Value4 + uParam0.Value14).Y, (uParam0.Value4 + uParam0.Value14).Z, uParam0.Value18, 0, 1, 1, 2);
-            uParam0.CamEntity.set_Rotation(((Entity)Game.get_PlayerPed()).get_Rotation() + Cam2Keyvoard.Value14);
+            API.SetCamParams(((PoolObject)uParam0.CamEntity).Handle, uParam0.Value1.X, uParam0.Value1.Y, uParam0.Value1.Z, (uParam0.Value4 + uParam0.Value14).X, (uParam0.Value4 + uParam0.Value14).Y, (uParam0.Value4 + uParam0.Value14).Z, uParam0.Value18, 0, 1, 1, 2);
+            uParam0.CamEntity.Rotation = ((Entity)Game.PlayerPed).Rotation + Cam2Keyvoard.Value14;
         }
 
         private float func_102(float fParam0, float fParam1, float fParam2)
@@ -954,7 +954,7 @@ namespace Client.net.LunaPark
             //IL_0058: Unknown result type (might be due to invalid IL or missing references)
             //IL_005b: Unknown result type (might be due to invalid IL or missing references)
             float fVar0 = 0.392699361f * (float)iParam0;
-            return API.GetOffsetFromEntityInWorldCoords(((PoolObject)Wheel.Entity).get_Handle(), 0f, Deg2rad(15.3f) * Rad2deg((float)Math.Sin(fVar0)), Deg2rad(-15.3f) * Rad2deg((float)Math.Cos(fVar0)));
+            return API.GetOffsetFromEntityInWorldCoords(((PoolObject)Wheel.Entity).Handle, 0f, Deg2rad(15.3f) * Rad2deg((float)Math.Sin(fVar0)), Deg2rad(-15.3f) * Rad2deg((float)Math.Cos(fVar0)));
         }
 
         private void OnStop(string name)

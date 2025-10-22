@@ -1,6 +1,8 @@
 using System.Drawing;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using GdiRect = System.Drawing.Rectangle;
+using UiRect = CitizenFX.Core.UI.Rectangle;
 
 namespace LunaPark
 {
