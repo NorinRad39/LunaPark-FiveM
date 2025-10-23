@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class UIMenuPanel
 	{

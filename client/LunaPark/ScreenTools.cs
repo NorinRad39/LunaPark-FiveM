@@ -5,7 +5,7 @@ using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 using Font = CitizenFX.Core.UI.Font;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public static class ScreenTools
 	{

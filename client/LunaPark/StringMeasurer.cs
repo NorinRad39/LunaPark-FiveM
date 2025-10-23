@@ -1,7 +1,7 @@
 using System;
 using CitizenFX.Core.UI;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class StringMeasurer
 	{

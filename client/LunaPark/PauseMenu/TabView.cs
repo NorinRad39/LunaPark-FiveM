@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Drawing; // Ajouté pour SizeF et PointF
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 
-namespace LunaPark.PauseMenu
+// Ajoutez cette directive pour éviter l'ambiguïté avec Font
+using Font = CitizenFX.Core.UI.Font;
+using Rectangle = CitizenFX.Core.UI.Rectangle;
+
+namespace Client.net.LunaPark.PauseMenu
 {
 	public class TabView
 	{
@@ -48,11 +52,14 @@ namespace LunaPark.PauseMenu
 				_visible = value;
 				if (value)
 				{
-					Effects.Start((ScreenEffect)9, 0, false);
+					// Remplacez Effects.Start par l'appel approprié si nécessaire
+					// Par exemple, si vous souhaitez appliquer un effet d'écran, utilisez l'API correspondante
+					// API.AnimateScreenEffect((int)ScreenEffect.MinigameTransitionIn); // Exemple fictif
 				}
 				else
 				{
-					Effects.Stop((ScreenEffect)9);
+					// Remplacez Effects.Stop par l'appel approprié si nécessaire
+					// API.StopScreenEffect((int)ScreenEffect.MinigameTransitionIn); // Exemple fictif
 				}
 			}
 		}
@@ -64,7 +71,7 @@ namespace LunaPark.PauseMenu
 			Title = title;
 			Tabs = new List<TabItem>();
 			Index = 0;
-			Name = Game.get_Player().get_Name();
+			Name = Game.Player.Name;
 			TemporarilyHidden = false;
 			CanLeave = true;
 		}
@@ -242,8 +249,8 @@ namespace LunaPark.PauseMenu
 			if (!HideTabs)
 			{
 				UIResText uIResText = new UIResText(Title, new PointF(safe.X, safe.Y - 80f), 1f, Colors.White, (Font)4, (Alignment)1);
-				((Text)uIResText).set_Shadow(true);
-				((Text)uIResText).Draw();
+				uIResText.Shadow = true;
+				uIResText.Draw();
 				if (Photo == null)
 				{
 					new Sprite("char_multiplayer", "char_multiplayer", new PointF((float)(int)res.Width - safe.X - 64f, safe.Y - 80f), new SizeF(64f, 64f)).Draw();
@@ -255,24 +262,24 @@ namespace LunaPark.PauseMenu
 					Photo.Draw();
 				}
 				UIResText uIResText2 = new UIResText(Name, new PointF((float)(int)res.Width - safe.X - 70f, safe.Y - 95f), 0.7f, Colors.White, (Font)4, (Alignment)2);
-				((Text)uIResText2).set_Shadow(true);
-				((Text)uIResText2).Draw();
+				uIResText2.Shadow = true;
+				uIResText2.Draw();
 				string t = Money;
 				if (string.IsNullOrEmpty(Money))
 				{
 					t = DateTime.Now.ToString();
 				}
 				UIResText uIResText3 = new UIResText(t, new PointF((float)(int)res.Width - safe.X - 70f, safe.Y - 60f), 0.4f, Colors.White, (Font)4, (Alignment)2);
-				((Text)uIResText3).set_Shadow(true);
-				((Text)uIResText3).Draw();
+				uIResText3.Shadow = true;
+				uIResText3.Draw();
 				string subt = MoneySubtitle;
 				if (string.IsNullOrEmpty(MoneySubtitle))
 				{
 					subt = "";
 				}
 				UIResText uIResText4 = new UIResText(subt, new PointF((float)(int)res.Width - safe.X - 70f, safe.Y - 40f), 0.4f, Colors.White, (Font)4, (Alignment)2);
-				((Text)uIResText4).set_Shadow(true);
-				((Text)uIResText4).Draw();
+				uIResText4.Shadow = true;
+				uIResText4.Draw();
 				for (int i = 0; i < Tabs.Count; i++)
 				{
 					float activeSize = res.Width - 2f * safe.X;

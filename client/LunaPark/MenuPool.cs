@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class MenuPool : BaseScript
 	{
@@ -184,7 +184,7 @@ namespace LunaPark
 		{
 			UIMenuItem item = new UIMenuItem(text, description);
 			menu.AddItem(item);
-			UIMenu submenu = new UIMenu(((Text)menu.Title).get_Caption(), text, offset);
+			UIMenu submenu = new UIMenu(((Text)menu.Title).Caption, text, offset);
 			if (BannerInheritance && menu.BannerTexture != null)
 			{
 				submenu.SetBannerType(menu.BannerTexture);

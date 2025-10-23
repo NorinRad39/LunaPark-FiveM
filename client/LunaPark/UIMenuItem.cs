@@ -2,7 +2,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class UIMenuItem
 	{

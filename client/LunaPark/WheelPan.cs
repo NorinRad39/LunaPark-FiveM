@@ -1,6 +1,6 @@
 using CitizenFX.Core;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	internal class WheelPan
 	{

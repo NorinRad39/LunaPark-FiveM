@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using CitizenFX.Core.UI;
 
-namespace LunaPark.PauseMenu
+namespace Client.net.LunaPark.PauseMenu
 {
 	public class TabItemSimpleList : TabItem
 	{

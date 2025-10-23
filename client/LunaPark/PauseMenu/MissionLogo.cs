@@ -1,4 +1,4 @@
-namespace LunaPark.PauseMenu
+namespace Client.net.LunaPark.PauseMenu
 {
 	public class MissionLogo
 	{

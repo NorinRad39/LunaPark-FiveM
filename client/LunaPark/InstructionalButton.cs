@@ -1,7 +1,7 @@
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class InstructionalButton
 	{

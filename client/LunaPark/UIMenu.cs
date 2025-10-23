@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using GdiRect = System.Drawing.Rectangle;
+using UiRect = CitizenFX.Core.UI.Rectangle;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class UIMenu
 	{
@@ -147,7 +149,7 @@ namespace LunaPark
 				if (ParentMenu == null && value && ResetCursorOnOpen)
 				{
 					API.SetCursorLocation(0.5f, 0.5f);
-					Hud.set_CursorSprite((CursorSprite)1);
+					API.SetCursorSprite(1);
 				}
 			}
 		}
@@ -253,16 +255,16 @@ namespace LunaPark
 			UpdateScaleform();
 			_mainMenu = new Container(new PointF(0f, 0f), new SizeF(700f, 500f), Color.FromArgb(0, 0, 0, 0));
 			BannerSprite = new Sprite(spriteLibrary, spriteName, new PointF(0f + Offset.X, 0f + Offset.Y), new SizeF(431f, 100f));
-			_mainMenu.get_Items().Add((IElement)(object)(Title = new UIResText(title, new PointF(215f + Offset.X, 13f + Offset.Y), 1.05f, Colors.White, (Font)1, (Alignment)0)));
+			_mainMenu.Items.Add((IElement)(object)(Title = new UIResText(title, new PointF(215f + Offset.X, 13f + Offset.Y), 1.05f, Colors.White, (CitizenFX.Core.UI.Font)1, (Alignment)0)));
 			if (!string.IsNullOrWhiteSpace(subtitle))
 			{
-				_mainMenu.get_Items().Add((IElement)(object)new UIResRectangle(new PointF(0f + offset.X, 100f + Offset.Y), new SizeF(431f, 37f), Colors.Black));
-				_mainMenu.get_Items().Add((IElement)(object)(Subtitle = new UIResText(subtitle, new PointF(8f + Offset.X, 103f + Offset.Y), 0.35f, Colors.WhiteSmoke, (Font)0, (Alignment)1)));
+				_mainMenu.Items.Add((IElement)(object)new UIResRectangle(new PointF(0f + offset.X, 100f + Offset.Y), new SizeF(431f, 37f), Colors.Black));
+				_mainMenu.Items.Add((IElement)(object)(Subtitle = new UIResText(subtitle, new PointF(8f + Offset.X, 103f + Offset.Y), 0.35f, Colors.WhiteSmoke, (CitizenFX.Core.UI.Font)0, (Alignment)1)));
 				if (subtitle.StartsWith("~"))
 				{
 					CounterPretext = subtitle.Substring(0, 3);
 				}
-				_counterText = new UIResText("", new PointF(425f + Offset.X, 103f + Offset.Y), 0.35f, Colors.WhiteSmoke, (Font)0, (Alignment)2);
+				_counterText = new UIResText("", new PointF(425f + Offset.X, 103f + Offset.Y), 0.35f, Colors.WhiteSmoke, (CitizenFX.Core.UI.Font)0, (Alignment)2);
 				_extraYOffset = 30;
 			}
 			_upAndDownSprite = new Sprite("commonmenu", "shop_arrows_upanddown", new PointF(190f + Offset.X, 517f + Offset.Y - 37f + (float)_extraYOffset), new SizeF(50f, 50f));
@@ -270,7 +272,7 @@ namespace LunaPark
 			_extraRectangleDown = new UIResRectangle(new PointF(0f + Offset.X, 542f + Offset.Y - 37f + (float)_extraYOffset), new SizeF(431f, 18f), Color.FromArgb(200, 0, 0, 0));
 			_descriptionBar = new UIResRectangle(new PointF(Offset.X, 123f), new SizeF(431f, 4f), Colors.Black);
 			_descriptionRectangle = new Sprite("commonmenu", "gradient_bgd", new PointF(Offset.X, 127f), new SizeF(431f, 30f));
-			_descriptionText = new UIResText("Description", new PointF(Offset.X + 5f, 125f), 0.35f, Color.FromArgb(255, 255, 255, 255), (Font)0, (Alignment)1);
+			_descriptionText = new UIResText("Description", new PointF(Offset.X + 5f, 125f), 0.35f, Color.FromArgb(255, 255, 255, 255), (CitizenFX.Core.UI.Font)0, (Alignment)1);
 			_background = new Sprite("commonmenu", "gradient_bgd", new PointF(Offset.X, 144f + Offset.Y - 37f + (float)_extraYOffset), new SizeF(290f, 25f));
 			SetKey(MenuControls.Up, (Control)172);
 			SetKey(MenuControls.Up, (Control)241);
@@ -317,16 +319,16 @@ namespace LunaPark
 		{
 			WidthOffset = widthOffset;
 			BannerSprite.Size = new SizeF(431 + WidthOffset, 100f);
-			_mainMenu.get_Items()[0].set_Position(new PointF(((float)WidthOffset + Offset.X + 431f) / 2f, 20f + Offset.Y));
-			((Text)_counterText).set_Position(new PointF(425f + Offset.X + (float)widthOffset, 110f + Offset.Y));
-			if (_mainMenu.get_Items().Count >= 1)
+			_mainMenu.Items[0].Position = new PointF(((float)WidthOffset + Offset.X + 431f) / 2f, 20f + Offset.Y);
+			((IElement)_counterText).Position = new PointF(425f + Offset.X + (float)widthOffset, 110f + Offset.Y);
+			if (_mainMenu.Items.Count >= 1)
 			{
-				UIResRectangle tmp = (UIResRectangle)(object)_mainMenu.get_Items()[1];
-				((Rectangle)tmp).set_Size(new SizeF(431 + WidthOffset, 37f));
+				UIResRectangle tmp = (UIResRectangle)(object)_mainMenu.Items[1];
+				tmp.Size = new SizeF(431 + WidthOffset, 37f);
 			}
 			if (BannerRectangle != null)
 			{
-				((Rectangle)BannerRectangle).set_Size(new SizeF(431 + WidthOffset, 100f));
+				BannerRectangle.Size = new SizeF(431 + WidthOffset, 100f);
 			}
 		}
 
@@ -346,8 +348,8 @@ namespace LunaPark
 		{
 			BannerSprite = null;
 			BannerRectangle = rectangle;
-			((Rectangle)BannerRectangle).set_Position(new PointF(Offset.X, Offset.Y));
-			((Rectangle)BannerRectangle).set_Size(new SizeF(431 + WidthOffset, 100f));
+			BannerRectangle.Position = new PointF(Offset.X, Offset.Y);
+			BannerRectangle.Size = new SizeF(431 + WidthOffset, 100f);
 		}
 
 		public void SetBannerType(string pathToCustomSprite)
@@ -450,17 +452,17 @@ namespace LunaPark
 
 		private float CalculateItemHeight()
 		{
-			float ItemOffset = 0f + _mainMenu.get_Items()[1].get_Position().Y - 37f;
+			float ItemOffset = 0f + _mainMenu.Items[1].Position.Y - 37f;
 			for (int i = 0; i < MenuItems.Count; i++)
 			{
-				ItemOffset += ((Rectangle)MenuItems[i]._rectangle).get_Size().Height;
+				ItemOffset += ((UiRect)MenuItems[i]._rectangle).Size.Height;
 			}
 			return ItemOffset;
 		}
 
 		private float CalculatePanelsPosition(bool hasDescription)
 		{
-			float Height = CalculateWindowHeight() + 40f + ((Rectangle)_mainMenu).get_Position().Y + CalculateCinematicHeight();
+			float Height = CalculateWindowHeight() + 40f + _mainMenu.Position.Y + CalculateCinematicHeight();
 			if (hasDescription)
 			{
 				Height += _descriptionRectangle.Size.Height + 5f;
@@ -476,17 +478,26 @@ namespace LunaPark
 			DrawWidth = new SizeF(431 + WidthOffset, 100f);
 			Safe = ScreenTools.SafezoneBounds;
 			BackgroundSize = ((Size > 10) ? new SizeF(431 + WidthOffset, 38f * (10f + WindowHeight + CinematicHeight)) : new SizeF(431 + WidthOffset, (float)(38 * Size) + WindowHeight));
-			((Rectangle)_extraRectangleUp).set_Size(new SizeF(431 + WidthOffset, 18f + WindowHeight + CinematicHeight));
-			((Rectangle)_extraRectangleDown).set_Size(new SizeF(431 + WidthOffset, 18f + WindowHeight + CinematicHeight));
+			((CitizenFX.Core.UI.Rectangle)_extraRectangleUp).Size = new SizeF(431 + WidthOffset, 18f + WindowHeight + CinematicHeight);
+			((CitizenFX.Core.UI.Rectangle)_extraRectangleDown).Size = new SizeF(431 + WidthOffset, 18f + WindowHeight + CinematicHeight);
 			_upAndDownSprite.Position = new PointF(190f + Offset.X + (float)((WidthOffset > 0) ? (WidthOffset / 2) : WidthOffset), 517f + Offset.Y - 37f + (float)_extraYOffset + WindowHeight + CinematicHeight);
 			ReDraw = false;
 			if (MenuItems.Count != 0 && !string.IsNullOrWhiteSpace(MenuItems[_activeItem % MenuItems.Count].Description))
 			{
 				RecalculateDescriptionPosition();
 				string descCaption = MenuItems[_activeItem % MenuItems.Count].Description;
-				((Text)_descriptionText).set_Caption(descCaption);
+				_descriptionText.Caption = descCaption;
 				_descriptionText.Wrap = 400f;
-				int numLines = ScreenTools.GetLineCount(descCaption, ((Text)_descriptionText).get_Position(), ((Text)_descriptionText).get_Font(), ((Text)_descriptionText).get_Scale(), ((Text)_descriptionText).get_Position().X + 400f);
+				int numLines = ScreenTools.GetLineCount(
+	descCaption,
+	new PointF(
+		_descriptionText.Position.X,
+		_descriptionText.Position.Y
+	),
+	_descriptionText.Font,
+	_descriptionText.Scale,
+	_descriptionText.Position.X + 400f
+);
 				_descriptionRectangle.Size = new SizeF(431 + WidthOffset, numLines * 25 + 15);
 			}
 		}
@@ -867,19 +878,19 @@ namespace LunaPark
 		{
 			float WindowHeight = CalculateWindowHeight();
 			float Cinematic = CalculateCinematicHeight();
-			((Rectangle)_descriptionBar).set_Position(new PointF(Offset.X, (float)(112 + _extraYOffset) + Offset.Y + WindowHeight + Cinematic));
+			((CitizenFX.Core.UI.Rectangle)_descriptionBar).Position = new PointF(Offset.X, (float)(112 + _extraYOffset) + Offset.Y + WindowHeight + Cinematic);
 			_descriptionRectangle.Position = new PointF(Offset.X, (float)(112 + _extraYOffset) + Offset.Y + WindowHeight + Cinematic);
-			((Text)_descriptionText).set_Position(new PointF(Offset.X + 8f, (float)(118 + _extraYOffset) + Offset.Y + WindowHeight + Cinematic));
-			((Rectangle)_descriptionBar).set_Size(new SizeF(431 + WidthOffset, 5f));
+			((Text)_descriptionText).Position = new PointF(Offset.X + 8f, (float)(118 + _extraYOffset) + Offset.Y + WindowHeight + Cinematic);
+			((CitizenFX.Core.UI.Rectangle)_descriptionBar).Size = new SizeF(431 + WidthOffset, 5f);
 			_descriptionRectangle.Size = new SizeF(431 + WidthOffset, 30f);
 			int count = Size;
 			if (count > 10)
 			{
 				count = 11;
 			}
-			((Rectangle)_descriptionBar).set_Position(new PointF(Offset.X, (float)(38 * count) + ((Rectangle)_descriptionBar).get_Position().Y));
+			((CitizenFX.Core.UI.Rectangle)_descriptionBar).Position = new PointF(Offset.X, (float)(38 * count) + ((CitizenFX.Core.UI.Rectangle)_descriptionBar).Position.Y);
 			_descriptionRectangle.Position = new PointF(Offset.X, (float)(38 * count) + _descriptionRectangle.Position.Y);
-			((Text)_descriptionText).set_Position(new PointF(Offset.X + 8f, (float)(38 * count) + ((Text)_descriptionText).get_Position().Y));
+			((Text)_descriptionText).Position = new PointF(Offset.X + 8f, (float)(38 * count) + ((Text)_descriptionText).Position.Y);
 		}
 
 		private float CalculateCinematicHeight()
@@ -914,10 +925,10 @@ namespace LunaPark
 			}
 			if (_buttonsEnabled)
 			{
-				API.DrawScaleformMovieFullscreen(_instructionalButtonsScaleform.get_Handle(), 255, 255, 255, 255, 0);
-				Hud.HideComponentThisFrame((HudComponent)6);
-				Hud.HideComponentThisFrame((HudComponent)7);
-				Hud.HideComponentThisFrame((HudComponent)9);
+				API.DrawScaleformMovieFullscreen(_instructionalButtonsScaleform.Handle, 255, 255, 255, 255, 0);
+				API.HideHudComponentThisFrame(6);
+				API.HideHudComponentThisFrame(7);
+				API.HideHudComponentThisFrame(9);
 			}
 			float CinematicHeight = CalculateCinematicHeight();
 			if (ScaleWithSafezone)
@@ -940,7 +951,7 @@ namespace LunaPark
 					UIResRectangle bannerRectangle = BannerRectangle;
 					if (bannerRectangle != null)
 					{
-						((Rectangle)bannerRectangle).Draw();
+						((CitizenFX.Core.UI.Rectangle)bannerRectangle).Draw();
 					}
 				}
 			}
@@ -953,20 +964,20 @@ namespace LunaPark
 				_ = Safe;
 			}
 			BannerSprite.Position = new PointF(BannerSprite.Position.X, Offset.Y + CinematicHeight);
-			_mainMenu.get_Items()[0].set_Position(new PointF(_mainMenu.get_Items()[0].get_Position().X, 13f + Offset.Y + CinematicHeight));
-			_mainMenu.get_Items()[1].set_Position(new PointF(_mainMenu.get_Items()[1].get_Position().X, 100f + Offset.Y + CinematicHeight));
-			_mainMenu.get_Items()[2].set_Position(new PointF(_mainMenu.get_Items()[2].get_Position().X, 103f + Offset.Y + CinematicHeight));
+			_mainMenu.Items[0].Position = new PointF(_mainMenu.Items[0].Position.X, 13f + Offset.Y + CinematicHeight);
+			_mainMenu.Items[1].Position = new PointF(_mainMenu.Items[1].Position.X, 100f + Offset.Y + CinematicHeight);
+			_mainMenu.Items[2].Position = new PointF(_mainMenu.Items[2].Position.X, 103f + Offset.Y + CinematicHeight);
 			_background.Position = new PointF(_background.Position.X, 144f + Offset.Y - 37f + (float)_extraYOffset + CinematicHeight);
 			if (BannerSprite != null)
 			{
-				_glareScaleform.CallFunction("SET_DATA_SLOT", new object[1] { GameplayCamera.get_RelativeHeading() });
+				_glareScaleform.CallFunction("SET_DATA_SLOT", new object[1] { GameplayCamera.RelativeHeading });
 				SizeF res = ScreenTools.ResolutionMaintainRatio;
 				SizeF _glareSize = new SizeF(1f, 1.054f);
 				PointF gl = new PointF(Offset.X / res.Width + 0.4491f, Offset.Y / res.Height + 0.475f);
-				API.DrawScaleformMovie(_glareScaleform.get_Handle(), gl.X, gl.Y, _glareSize.Width, _glareSize.Height, 255, 255, 255, 255, 0);
+				API.DrawScaleformMovie(_glareScaleform.Handle, gl.X, gl.Y, _glareSize.Width, _glareSize.Height, 255, 255, 255, 255, 0);
 			}
 			ReDraw = true;
-			((Rectangle)_mainMenu).Draw();
+			((CitizenFX.Core.UI.Rectangle)_mainMenu).Draw();
 			if (MenuItems.Count == 0 && Windows.Count == 0)
 			{
 				API.ResetScriptGfxAlign();
@@ -977,7 +988,7 @@ namespace LunaPark
 			MenuItems[_activeItem % MenuItems.Count].Selected = true;
 			if (!string.IsNullOrWhiteSpace(MenuItems[_activeItem % MenuItems.Count].Description))
 			{
-				((Rectangle)_descriptionBar).Draw();
+				((CitizenFX.Core.UI.Rectangle)_descriptionBar).Draw();
 				_descriptionRectangle.Draw();
 				((Text)_descriptionText).Draw();
 			}
@@ -1002,14 +1013,14 @@ namespace LunaPark
 					item.Draw();
 					count++;
 				}
-				((Rectangle)_extraRectangleUp).Draw();
-				((Rectangle)_extraRectangleDown).Draw();
+				((CitizenFX.Core.UI.Rectangle)_extraRectangleUp).Draw();
+				((CitizenFX.Core.UI.Rectangle)_extraRectangleDown).Draw();
 				_upAndDownSprite.Draw();
 				if (_counterText != null)
 				{
 					string cap = CurrentSelection + 1 + " / " + Size;
-					((Text)_counterText).set_Caption(CounterPretext + cap);
-					((Text)_counterText).Draw();
+					_counterText.Caption = CounterPretext + cap;
+					_counterText.Draw();
 				}
 			}
 			if (Windows.Count > 0)
@@ -1056,7 +1067,7 @@ namespace LunaPark
 				API.EnableControlAction(2, 24, true);
 				if (_itemsDirty)
 				{
-					MenuItems.Where((UIMenuItem i) => i.Hovered).ToList().ForEach(delegate(UIMenuItem i)
+					MenuItems.Where((UIMenuItem i) => i.Hovered).ToList().ForEach(delegate (UIMenuItem i)
 					{
 						i.Hovered = false;
 					});
@@ -1074,12 +1085,12 @@ namespace LunaPark
 			}
 			if (ScreenTools.IsMouseInBounds(new PointF(0f, 0f), new SizeF(30f, 1080f)) && MouseEdgeEnabled)
 			{
-				GameplayCamera.set_RelativeHeading(GameplayCamera.get_RelativeHeading() + 5f);
+				GameplayCamera.RelativeHeading += 5f;
 				API.SetCursorSprite(6);
 			}
 			else if (ScreenTools.IsMouseInBounds(new PointF(Convert.ToInt32(ScreenTools.ResolutionMaintainRatio.Width - 30f), 0f), new SizeF(30f, 1080f)) && MouseEdgeEnabled)
 			{
-				GameplayCamera.set_RelativeHeading(GameplayCamera.get_RelativeHeading() - 5f);
+				GameplayCamera.RelativeHeading -= 5f;
 				API.SetCursorSprite(7);
 			}
 			else if (MouseEdgeEnabled)
@@ -1109,12 +1120,12 @@ namespace LunaPark
 							{
 								switch (res)
 								{
-								case 1:
-									SelectItem();
-									break;
-								case 2:
-									GoRight();
-									break;
+									case 1:
+										SelectItem();
+										break;
+									case 2:
+										GoRight();
+										break;
 								}
 							}
 							else
@@ -1149,7 +1160,7 @@ namespace LunaPark
 			}
 			if (ScreenTools.IsMouseInBounds(new PointF(extraX, extraY), new SizeF(431 + WidthOffset, 18f)))
 			{
-				((Rectangle)_extraRectangleUp).set_Color(Color.FromArgb(255, 30, 30, 30));
+				((CitizenFX.Core.UI.Rectangle)_extraRectangleUp).Color = Color.FromArgb(255, 30, 30, 30);
 				if (Game.IsControlJustPressed(0, (Control)24))
 				{
 					if (Size > 10)
@@ -1164,11 +1175,11 @@ namespace LunaPark
 			}
 			else
 			{
-				((Rectangle)_extraRectangleUp).set_Color(Color.FromArgb(200, 0, 0, 0));
+				((CitizenFX.Core.UI.Rectangle)_extraRectangleUp).Color = Color.FromArgb(200, 0, 0, 0);
 			}
 			if (ScreenTools.IsMouseInBounds(new PointF(extraX, extraY + 18f), new SizeF(431 + WidthOffset, 18f)))
 			{
-				((Rectangle)_extraRectangleDown).set_Color(Color.FromArgb(255, 30, 30, 30));
+				((CitizenFX.Core.UI.Rectangle)_extraRectangleDown).Color = Color.FromArgb(255, 30, 30, 30);
 				if (Game.IsControlJustPressed(0, (Control)24))
 				{
 					if (Size > 10)
@@ -1183,7 +1194,7 @@ namespace LunaPark
 			}
 			else
 			{
-				((Rectangle)_extraRectangleDown).set_Color(Color.FromArgb(200, 0, 0, 0));
+				((CitizenFX.Core.UI.Rectangle)_extraRectangleDown).Color = Color.FromArgb(200, 0, 0, 0);
 			}
 		}
 
@@ -1246,7 +1257,7 @@ namespace LunaPark
 		public void ProcessKey(Keys key)
 		{
 			if ((from MenuControls menuControl in _menuControls
-				select new List<Keys>(_keyDictionary[menuControl].Item1)).Any((List<Keys> tmpKeys) => tmpKeys.Any((Keys k) => k == key)))
+				 select new List<Keys>(_keyDictionary[menuControl].Item1)).Any((List<Keys> tmpKeys) => tmpKeys.Any((Keys k) => k == key)))
 			{
 				ProcessControl(key);
 			}

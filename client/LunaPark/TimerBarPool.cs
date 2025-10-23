@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class TimerBarPool
 	{

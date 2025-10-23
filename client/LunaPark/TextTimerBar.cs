@@ -1,7 +1,7 @@
 using System.Drawing;
 using CitizenFX.Core.UI;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class TextTimerBar : TimerBarBase
 	{
@@ -18,7 +18,7 @@ namespace LunaPark
 			SizeF res = ScreenTools.ResolutionMaintainRatio;
 			PointF safe = ScreenTools.SafezoneBounds;
 			base.Draw(interval);
-			((Text)new UIResText(Text, new PointF((float)(int)res.Width - safe.X - 10f, (float)(int)res.Height - safe.Y - (float)(42 + 4 * interval)), 0.5f, Colors.White, (Font)0, (Alignment)2)).Draw();
+			((Text)new UIResText(Text, new PointF((float)(int)res.Width - safe.X - 10f, (float)(int)res.Height - safe.Y - (float)(42 + 4 * interval)), 0.5f, Colors.White, CitizenFX.Core.UI.Font.ChaletLondon, (Alignment)2)).Draw();
 		}
 	}
 }

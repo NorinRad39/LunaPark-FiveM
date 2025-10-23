@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace LunaPark.PauseMenu
+namespace Client.net.LunaPark.PauseMenu
 {
 	public class MissionInformation
 	{

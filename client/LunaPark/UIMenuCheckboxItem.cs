@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class UIMenuCheckboxItem : UIMenuItem
 	{

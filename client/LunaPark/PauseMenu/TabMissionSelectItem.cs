@@ -4,7 +4,7 @@ using System.Drawing;
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
 
-namespace LunaPark.PauseMenu
+namespace Client.net.LunaPark.PauseMenu
 {
 	public class TabMissionSelectItem : TabItem
 	{

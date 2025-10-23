@@ -2,7 +2,7 @@ using System;
 using System.Drawing;
 using CitizenFX.Core;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public static class MiscExtensions
 	{

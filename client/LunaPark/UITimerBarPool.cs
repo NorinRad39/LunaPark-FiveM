@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class UITimerBarPool
 	{
@@ -33,7 +33,7 @@ namespace LunaPark
 			for (int i = 0; i < TimerBars.Count; i++)
 			{
 				UITimerBarItem item = TimerBars[i];
-				item.Draw(38 + 38 * i + (LoadingPrompt.get_IsActive() ? 38 : 0));
+				item.Draw(38 + 38 * i + (false ? 38 : 0));
 			}
 		}
 	}

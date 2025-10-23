@@ -4,45 +4,45 @@ using CitizenFX.Core.UI;
 using GdiRect = System.Drawing.Rectangle;
 using UiRect = CitizenFX.Core.UI.Rectangle;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
-	public class UIResRectangle : Rectangle
+	public class UIResRectangle : UiRect
 	{
 		public UIResRectangle()
-			: this()
+			: base(new PointF(0, 0), new SizeF(0, 0), Color.White)
 		{
 		}
 
 		public UIResRectangle(PointF pos, SizeF size)
-			: this(pos, size)
+			: base(pos, size, Color.White)
 		{
 		}
 
 		public UIResRectangle(PointF pos, SizeF size, Color color)
-			: this(pos, size, color)
+			: base(pos, size, color)
 		{
 		}
 
 		public override void Draw(SizeF offset)
 		{
-			if (((Rectangle)this).get_Enabled())
+			if (this.Enabled)
 			{
-				int screenw = Screen.get_Resolution().Width;
-				int screenh = Screen.get_Resolution().Height;
+				int screenw = Screen.Resolution.Width;
+				int screenh = Screen.Resolution.Height;
 				float ratio = (float)screenw / (float)screenh;
 				float width = 1080f * ratio;
-				float w = ((Rectangle)this).get_Size().Width / width;
-				float h = ((Rectangle)this).get_Size().Height / 1080f;
-				float x = (((Rectangle)this).get_Position().X + offset.Width) / width + w * 0.5f;
-				float y = (((Rectangle)this).get_Position().Y + offset.Height) / 1080f + h * 0.5f;
-				API.DrawRect(x, y, w, h, (int)((Rectangle)this).get_Color().R, (int)((Rectangle)this).get_Color().G, (int)((Rectangle)this).get_Color().B, (int)((Rectangle)this).get_Color().A);
+				float w = this.Size.Width / width;
+				float h = this.Size.Height / 1080f;
+				float x = (this.Position.X + offset.Width) / width + w * 0.5f;
+				float y = (this.Position.Y + offset.Height) / 1080f + h * 0.5f;
+				API.DrawRect(x, y, w, h, (int)this.Color.R, (int)this.Color.G, (int)this.Color.B, (int)this.Color.A);
 			}
 		}
 
 		public static void Draw(float xPos, float yPos, int boxWidth, int boxHeight, Color color)
 		{
-			int screenw = Screen.get_Resolution().Width;
-			int screenh = Screen.get_Resolution().Height;
+			int screenw = Screen.Resolution.Width;
+			int screenh = Screen.Resolution.Height;
 			float ratio = (float)screenw / (float)screenh;
 			float width = 1080f * ratio;
 			float w = (float)boxWidth / width;

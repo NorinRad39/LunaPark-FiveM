@@ -1,4 +1,4 @@
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public enum Keys
 	{

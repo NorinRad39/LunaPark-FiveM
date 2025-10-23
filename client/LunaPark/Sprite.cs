@@ -5,7 +5,7 @@ using System.Reflection;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class Sprite
 	{

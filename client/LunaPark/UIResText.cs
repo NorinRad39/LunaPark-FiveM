@@ -6,7 +6,7 @@ using CitizenFX.Core.UI;
 using GdiFont = System.Drawing.Font;
 using UiFont = CitizenFX.Core.UI.Font; // utiliser GdiFont ou UiFont pour lever l'ambiguïté
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class UIResText : Text
 	{
@@ -29,22 +29,20 @@ namespace LunaPark
 		}
 
 		public UIResText(string caption, PointF position, float scale)
-			: this(caption, position, scale)
+			: base(caption, position, scale)
 		{
 			TextAlignment = (Alignment)1;
 		}
 
 		public UIResText(string caption, PointF position, float scale, Color color)
-			: this(caption, position, scale, color)
+			: base(caption, position, scale, color)
 		{
 			TextAlignment = (Alignment)1;
 		}
 
-		public UIResText(string caption, PointF position, float scale, Color color, Font font, Alignment justify)
-			: this(caption, position, scale, color, font, (Alignment)1)
+		public UIResText(string caption, PointF position, float scale, Color color, UiFont font, Alignment justify)
+			: base(caption, position, scale, color, font)
 		{
-			//IL_0011: Unknown result type (might be due to invalid IL or missing references)
-			//IL_001c: Unknown result type (might be due to invalid IL or missing references)
 			TextAlignment = justify;
 		}
 
@@ -100,16 +98,14 @@ namespace LunaPark
 		}
 
 		[Obsolete("Use ScreenTools.GetTextWidth instead.", true)]
-		public static float MeasureStringWidth(string str, Font font, float scale)
+		public static float MeasureStringWidth(string str, UiFont font, float scale)
 		{
-			//IL_0001: Unknown result type (might be due to invalid IL or missing references)
 			return ScreenTools.GetTextWidth(str, font, scale);
 		}
 
 		[Obsolete("Use ScreenTools.GetTextWidth instead.", true)]
-		public static float MeasureStringWidthNoConvert(string str, Font font, float scale)
+		public static float MeasureStringWidthNoConvert(string str, UiFont font, float scale)
 		{
-			//IL_0001: Unknown result type (might be due to invalid IL or missing references)
 			return ScreenTools.GetTextWidth(str, font, scale);
 		}
 
@@ -124,20 +120,20 @@ namespace LunaPark
 			//IL_00e6: Unknown result type (might be due to invalid IL or missing references)
 			//IL_00ec: Unknown result type (might be due to invalid IL or missing references)
 			//IL_00ef: Invalid comparison between Unknown and I4
-			int screenw = Screen.get_Resolution().Width;
-			int screenh = Screen.get_Resolution().Height;
+			int screenw = Screen.Resolution.Width;
+			int screenh = Screen.Resolution.Height;
 			float ratio = (float)screenw / (float)screenh;
 			float width = 1080f * ratio;
-			float x = ((Text)this).get_Position().X / width;
-			float y = ((Text)this).get_Position().Y / 1080f;
-			API.SetTextFont((int)((Text)this).get_Font());
-			API.SetTextScale(1f, ((Text)this).get_Scale());
-			API.SetTextColour((int)((Text)this).get_Color().R, (int)((Text)this).get_Color().G, (int)((Text)this).get_Color().B, (int)((Text)this).get_Color().A);
-			if (((Text)this).get_Shadow())
+			float x = Position.X / width;
+			float y = Position.Y / 1080f;
+			API.SetTextFont((int)this.Font);
+			API.SetTextScale(1f, this.Scale);
+			API.SetTextColour(this.Color.R, this.Color.G, this.Color.B, this.Color.A);
+			if (this.Shadow)
 			{
 				API.SetTextDropShadow();
 			}
-			if (((Text)this).get_Outline())
+			if (this.Outline)
 			{
 				API.SetTextOutline();
 			}
@@ -157,11 +153,11 @@ namespace LunaPark
 			}
 			if (Wrap != 0f)
 			{
-				float xsize = (((Text)this).get_Position().X + Wrap) / width;
+				float xsize = (Position.X + Wrap) / width;
 				API.SetTextWrap(x, xsize);
 			}
 			API.SetTextEntry("jamyfafi");
-			AddLongString(((Text)this).get_Caption());
+			AddLongString(Caption);
 			API.DrawText(x, y);
 		}
 	}

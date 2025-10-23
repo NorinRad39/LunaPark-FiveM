@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	[Obsolete("UIMenuColoredItem is deprecated: use UIMenuItem(text, description, mainColor, hilightColor) instead", true)]
 	public class UIMenuColoredItem : UIMenuItem

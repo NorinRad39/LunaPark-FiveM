@@ -1,6 +1,6 @@
 using System.Drawing;
 
-namespace LunaPark
+namespace Client.net.LunaPark
 {
 	public class UIMenuHeritageWindow : UIMenuWindow
 	{
