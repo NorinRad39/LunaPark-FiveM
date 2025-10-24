@@ -59,8 +59,8 @@ namespace Client.net.LunaPark
 				{
 					API.RequestStreamedTextureDict(TextureDict, true);
 				}
-				int screenw = Screen.get_Resolution().Width;
-				int screenh = Screen.get_Resolution().Height;
+				int screenw = Screen.Resolution.Width;
+				int screenh = Screen.Resolution.Height;
 				float ratio = (float)screenw / (float)screenh;
 				float width = 1080f * ratio;
 				float w = Size.Width / width;
@@ -77,8 +77,8 @@ namespace Client.net.LunaPark
 			{
 				API.RequestStreamedTextureDict(dict, true);
 			}
-			int screenw = Screen.get_Resolution().Width;
-			int screenh = Screen.get_Resolution().Height;
+			int screenw = Screen.Resolution.Width;
+			int screenh = Screen.Resolution.Height;
 			float ratio = (float)screenw / (float)screenh;
 			float width = 1080f * ratio;
 			float w = (float)boxWidth / width;

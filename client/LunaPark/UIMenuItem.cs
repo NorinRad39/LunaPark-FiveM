@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
+using Font = CitizenFX.Core.UI.Font;
 
 namespace Client.net.LunaPark
 {
@@ -79,11 +80,11 @@ namespace Client.net.LunaPark
 		{
 			get
 			{
-				return ((Text)_text).get_Caption();
+				return _text.Caption;
 			}
 			set
 			{
-				((Text)_text).set_Caption(value);
+				_text.Caption = value;
 			}
 		}
 
@@ -133,19 +134,19 @@ namespace Client.net.LunaPark
 
 		public virtual void Position(int y)
 		{
-			((Rectangle)_rectangle).set_Position(new PointF(Offset.X, (float)(y + 144) + Offset.Y));
+			((CitizenFX.Core.UI.Rectangle)_rectangle).Position = new PointF(Offset.X, (float)(y + 144) + Offset.Y);
 			_selectedSprite.Position = new PointF(0f + Offset.X, (float)(y + 144) + Offset.Y);
-			((Text)_text).set_Position(new PointF(8f + Offset.X, (float)(y + 147) + Offset.Y));
+			((Text)_text).Position = new PointF(8f + Offset.X, (float)(y + 147) + Offset.Y);
 			_badgeLeft.Position = new PointF(0f + Offset.X, (float)(y + 142) + Offset.Y);
 			_badgeRight.Position = new PointF(385f + Offset.X, (float)(y + 142) + Offset.Y);
-			((Text)_labelText).set_Position(new PointF(420f + Offset.X, (float)(y + 148) + Offset.Y));
+			((Text)_labelText).Position = new PointF(420f + Offset.X, (float)(y + 148) + Offset.Y);
 		}
 
 		public virtual async Task Draw()
 		{
 			if (Hovered && !Selected)
 			{
-				((Rectangle)_rectangle).Draw();
+				((CitizenFX.Core.UI.Rectangle)_rectangle).Draw();
 			}
 			if (Selected)
 			{
@@ -157,14 +158,14 @@ namespace Client.net.LunaPark
 				_selectedSprite.Color = MainColor;
 				_selectedSprite.Draw();
 			}
-			((Text)_text).set_Color((!Enabled) ? _disabledColor : (Selected ? HighlightedTextColor : TextColor));
+			((Text)_text).Color = (!Enabled) ? _disabledColor : (Selected ? HighlightedTextColor : TextColor);
 			if (LeftBadge == BadgeStyle.None)
 			{
-				((Text)_text).set_Position(new PointF(8f + Offset.X, ((Text)_text).get_Position().Y));
+				((Text)_text).Position = new PointF(8f + Offset.X, ((Text)_text).Position.Y);
 			}
 			else
 			{
-				((Text)_text).set_Position(new PointF(35f + Offset.X, ((Text)_text).get_Position().Y));
+				((Text)_text).Position = new PointF(35f + Offset.X, ((Text)_text).Position.Y);
 				_badgeLeft.TextureDict = BadgeToSpriteLib(LeftBadge);
 				_badgeLeft.TextureName = BadgeToSpriteName(LeftBadge, Selected);
 				_badgeLeft.Color = BadgeToColor(LeftBadge, Selected);
@@ -182,17 +183,19 @@ namespace Client.net.LunaPark
 			{
 				if (RightBadge == BadgeStyle.None)
 				{
-					((Text)_labelText).set_Position(new PointF(420f + Offset.X + (float)Parent.WidthOffset, ((Text)_labelText).get_Position().Y));
+					((Text)_labelText).Position = new PointF(420f + Offset.X + (float)Parent.WidthOffset, ((Text)_labelText).Position.Y);
 				}
 				else
 				{
-					((Text)_labelText).set_Position(new PointF(390f + Offset.X + (float)Parent.WidthOffset, ((Text)_labelText).get_Position().Y));
+					((Text)_labelText).Position = new PointF(390f + Offset.X + (float)Parent.WidthOffset, ((Text)_labelText).Position.Y);
 				}
-				((Text)_labelText).set_Caption(RightLabel);
+				((Text)_labelText).Caption = RightLabel;
 				UIResText labelText = _labelText;
 				Color color;
-				((Text)_text).set_Color(color = ((!Enabled) ? _disabledColor : (Selected ? Colors.Black : Colors.WhiteSmoke)));
-				((Text)labelText).set_Color(color);
+				color = ((!Enabled) ? _disabledColor : (Selected ? Colors.Black : Colors.WhiteSmoke));
+				((Text)_text).Color = color;
+				((Text)labelText).Color = color;
+				((Text)_labelText).Color = color;
 				((Text)_labelText).Draw();
 			}
 			((Text)_text).Draw();
@@ -244,10 +247,10 @@ namespace Client.net.LunaPark
 				BadgeStyle.Armour => selected ? "shop_armour_icon_b" : "shop_armour_icon_a", 
 				BadgeStyle.Barber => selected ? "shop_barber_icon_b" : "shop_barber_icon_a", 
 				BadgeStyle.Clothes => selected ? "shop_clothing_icon_b" : "shop_clothing_icon_a", 
-				BadgeStyle.Franklin => selected ? "shop_franklin_icon_b" : "shop_franklin_icon_a", 
+				BadgeStyle.Franklin => selected ? "shop_franklin_icon_b" : "shop_franklin_icon_a",
 				BadgeStyle.Bike => selected ? "shop_garage_bike_icon_b" : "shop_garage_bike_icon_a", 
-				BadgeStyle.Car => selected ? "shop_garage_icon_b" : "shop_garage_icon_a", 
-				BadgeStyle.Gun => selected ? "shop_gunclub_icon_b" : "shop_gunclub_icon_a", 
+				BadgeStyle.Car => selected ? "shop_garage_icon_b" : "shop_garage_icon_a",
+				BadgeStyle.Gun => selected ? "shop_gunclub_icon_b" : "shop_gunclub_icon_a",
 				BadgeStyle.Heart => selected ? "shop_health_icon_b" : "shop_health_icon_a", 
 				BadgeStyle.Lock => "shop_lock", 
 				BadgeStyle.Makeup => selected ? "shop_makeup_icon_b" : "shop_makeup_icon_a", 

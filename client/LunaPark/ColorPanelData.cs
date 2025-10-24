@@ -6,6 +6,9 @@ namespace Client.net.LunaPark
 	public class Pagination
 	{
 		// Ajoutez ici les membres nécessaires selon vos besoins
+		public int Min { get; set; }
+		public int Max { get; set; }
+		public int Total { get; set; }
 	}
 
 	public class ColorPanelData

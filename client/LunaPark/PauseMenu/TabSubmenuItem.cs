@@ -120,7 +120,7 @@ namespace Client.net.LunaPark.PauseMenu
 			for (int i = 0; i < Items.Count; i++)
 			{
 				bool hovering = ScreenTools.IsMouseInBounds(base.SafeSize.AddPoints(new PointF(0f, (itemSize.Height + 3f) * (float)i)), itemSize);
-				((Rectangle)new UIResRectangle(base.SafeSize.AddPoints(new PointF(0f, (itemSize.Height + 3f) * (float)i)), itemSize, (Index == i && Focused) ? Color.FromArgb(fullAlpha, Colors.White) : ((hovering && Focused) ? Color.FromArgb(100, 50, 50, 50) : Color.FromArgb(blackAlpha, Colors.Black)))).Draw();
+				((CitizenFX.Core.UI.Rectangle)new UIResRectangle(base.SafeSize.AddPoints(new PointF(0f, (itemSize.Height + 3f) * (float)i)), itemSize, (Index == i && Focused) ? Color.FromArgb(fullAlpha, Colors.White) : ((hovering && Focused) ? Color.FromArgb(100, 50, 50, 50) : Color.FromArgb(blackAlpha, Colors.Black)))).Draw();
 				((Text)new UIResText(Items[i].Title, base.SafeSize.AddPoints(new PointF(6f, 5f + (itemSize.Height + 3f) * (float)i)), 0.35f, Color.FromArgb(fullAlpha, (Index == i && Focused) ? Colors.Black : Colors.White))).Draw();
 				if (!(Focused && hovering) || !Game.IsControlJustPressed(0, (Control)237))
 				{

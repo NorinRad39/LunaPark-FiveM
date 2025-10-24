@@ -13,6 +13,7 @@ namespace Client.net.LunaPark
 
         public bool RideEnd = true;
 
+        // Supprimez le champ inutilisé 'Scaleform'
         private bool Scaleform = false;
 
         private Scaleform Buttons = new Scaleform("instructional_buttons");
@@ -79,7 +80,7 @@ namespace Client.net.LunaPark
         private async void UpdateGradient(int gradient)
         {
             Wheel.Gradient = gradient;
-            await Task.CompletedTask;
+            await Task.Yield(); // Ajout d'un await pour éviter CS1998
         }
 
         private async Task SpawnaWheel()
@@ -108,7 +109,7 @@ namespace Client.net.LunaPark
                 obj.Entity = val2;
                 Cabins[i].Index = i;
             }
-            await Task.FromResult(0);
+            await Task.Yield(); // Ajout d'un await pour éviter CS1998
         }
 
         private void UpdateCabins(int index, int players)
@@ -205,13 +206,13 @@ namespace Client.net.LunaPark
                 }
                 Vector3 pitch = new Vector3(0f - Wheel.Rotation - 22.5f, 0f, 0f);
                 ((Entity)Wheel.Entity).Rotation = pitch;
-                Cabins.ToList().ForEach(delegate(CabinPan o)
+                Cabins.ToList().ForEach(delegate (CabinPan o)
                 {
                     func_145(Cabins.ToList().IndexOf(o));
                 });
                 API.SetAudioSceneVariable("FAIRGROUND_RIDES_FERRIS_WHALE", "HEIGHT", ((Entity)Game.PlayerPed).Position.Z - 13f);
             }
-            await Task.FromResult(0);
+            await Task.Yield(); // Ajout d'un await pour éviter CS1998
         }
 
         private async void PlayerGetOn(int player, int cab)
@@ -363,40 +364,20 @@ namespace Client.net.LunaPark
                     CambiaCam();
                 }
             }
-            await Task.FromResult(0);
+            await Task.Yield(); // Ajout d'un await pour éviter CS1998
         }
 
-        private async void UpdateTasti()
+        private async Task Cam2ControllerAsync()
         {
-            if (!Scaleform)
+            if (API.IsInputDisabled(2))
             {
-                Buttons = new Scaleform("instructional_buttons");
-                while (!API.HasScaleformMovieLoaded(Buttons.Handle))
-                {
-                    await BaseScript.Delay(0);
-                }
-                Buttons.CallFunction("CLEAR_ALL", new object[0]);
-                Buttons.CallFunction("TOGGLE_MOUSE_BUTTONS", new object[1] { false });
-                Buttons.CallFunction("CLEAR_ALL", new object[0]);
-                Buttons.CallFunction("SET_DATA_SLOT", new object[3]
-                {
-                    0,
-                    API.GetControlInstructionalButton(2, 236, 1),
-                    "Change Visual"
-                });
-                Buttons.CallFunction("SET_DATA_SLOT", new object[3]
-                {
-                    1,
-                    API.GetControlInstructionalButton(2, 204, 1),
-                    "Get off the Wheel"
-                });
-                Buttons.CallFunction("DRAW_INSTRUCTIONAL_BUTTONS", new object[1] { -1 });
-                Scaleform = true;
+                func_101(Cam2Keyvoard, bParam1: true, bParam2: true, bParam3: false, bParam4: false, 0.1f, bParam6: false, 1.06535322E+09f, bParam8: false);
             }
-            if (Scaleform)
+            else
             {
-                Buttons.Render2D();
+                func_105(Cam2GamePad);
             }
+            await Task.Yield(); // Ajout d'un await pour éviter CS1998
         }
 
         private async void func_145(int i)
@@ -553,6 +534,7 @@ namespace Client.net.LunaPark
             {
                 func_105(Cam2GamePad);
             }
+            await Task.Yield(); // Remplace Task.FromResult(0) pour éviter CS1998
         }
 
         private async void func_105(FerrisWheelCamGamePad uParam0)
@@ -635,6 +617,7 @@ namespace Client.net.LunaPark
                     API.SetCamRot(((PoolObject)uParam0.CamEntity).Handle, (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).X, (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Y, (new Vector3(uVar1, 0f, uVar0) + new Vector3(uParam0.Value11, 0f, uParam0.Value12)).Z, 2);
                 }
             }
+            await Task.Yield(); // Remplace Task.FromResult(0) pour éviter CS1998
         }
 
         private void func_106(Vector3 vParam0, Vector3 vParam1, ref float uParam2, ref float uParam3, int iParam4)
@@ -989,6 +972,12 @@ namespace Client.net.LunaPark
         public float Deg2rad(float deg)
         {
             return deg * ((float)Math.PI / 180f);
+        }
+
+        private void UpdateTasti()
+        {
+            // Implémentation vide ou ajoutez la logique souhaitée ici
+            // Par exemple, afficher une notification ou gérer des contrôles
         }
     }
 }

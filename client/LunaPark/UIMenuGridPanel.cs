@@ -5,6 +5,9 @@ using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
 
+// Ajoutez cette directive using pour éviter l'ambiguïté
+using Font = CitizenFX.Core.UI.Font;
+
 namespace Client.net.LunaPark
 {
 	public class UIMenuGridPanel : UIMenuPanel
@@ -62,10 +65,10 @@ namespace Client.net.LunaPark
 			int ParentOffsetWidth = base.ParentItem.Parent.WidthOffset;
 			Background.Position = new PointF(ParentOffsetX, y);
 			Grid.Position = new PointF(ParentOffsetX + 115.5f + (float)(ParentOffsetWidth / 2), 37.5f + y);
-			((Text)Top).set_Position(new PointF(ParentOffsetX + 215.5f + (float)(ParentOffsetWidth / 2), 5f + y));
-			((Text)Left).set_Position(new PointF(ParentOffsetX + 57.75f + (float)(ParentOffsetWidth / 2), 120f + y));
-			((Text)Right).set_Position(new PointF(ParentOffsetX + 373.25f + (float)(ParentOffsetWidth / 2), 120f + y));
-			((Text)Bottom).set_Position(new PointF(ParentOffsetX + 215.5f + (float)(ParentOffsetWidth / 2), 240f + y));
+			Top.Position = new PointF(ParentOffsetX + 215.5f + (float)(ParentOffsetWidth / 2), 5f + y);
+			Left.Position = new PointF(ParentOffsetX + 57.75f + (float)(ParentOffsetWidth / 2), 120f + y);
+			Right.Position = new PointF(ParentOffsetX + 373.25f + (float)(ParentOffsetWidth / 2), 120f + y);
+			Bottom.Position = new PointF(ParentOffsetX + 215.5f + (float)(ParentOffsetWidth / 2), 240f + y);
 			if (!CircleLocked)
 			{
 				CircleLocked = true;

@@ -18,12 +18,12 @@ namespace Client.net.LunaPark
 		public UIProgressBar(string text)
 			: this(text, new PointF(800f, 1030f), Color.FromArgb(100, 255, 255, 255))
 		{
-			Text = new UIResText((text != "") ? text : "N/A", new PointF(0f, 0f), 0.35f, Color.FromArgb(255, 255, 255, 255), (Font)0, (Alignment)0);
+			Text = new UIResText((text != "") ? text : "N/A", new PointF(0f, 0f), 0.35f, Color.FromArgb(255, 255, 255, 255), CitizenFX.Core.UI.Font.ChaletLondon, (Alignment)0);
 		}
 
 		public UIProgressBar(string text, PointF position, Color color)
 		{
-			Text = new UIResText((text != "") ? text : "N/A", new PointF(0f, 0f), 0.35f, Color.FromArgb(255, 255, 255, 255), (Font)0, (Alignment)0);
+			Text = new UIResText((text != "") ? text : "N/A", new PointF(0f, 0f), 0.35f, Color.FromArgb(255, 255, 255, 255), CitizenFX.Core.UI.Font.ChaletLondon, (Alignment)0);
 			Background = new UIResRectangle(new PointF(0f, 0f), new SizeF(350f, 40f), Color.FromArgb(100, 0, 0, 0));
 			ProgressBar = new UIResRectangle(new PointF(0f, 0f), new SizeF(0f, 30f), color);
 			Position = position;
@@ -31,12 +31,12 @@ namespace Client.net.LunaPark
 
 		public async void Draw()
 		{
-			((Rectangle)Background).set_Position(Position);
-			((Text)Text).set_Position(new PointF(Position.X + 170f, Position.Y + 5f));
-			((Rectangle)ProgressBar).set_Position(new PointF(Position.X + 5f, Position.Y + 5f));
-			((Rectangle)Background).Draw();
-			((Text)Text).Draw();
-			((Rectangle)ProgressBar).Draw();
+			((CitizenFX.Core.UI.Rectangle)Background).Position = Position;
+			((CitizenFX.Core.UI.Text)Text).Position = new PointF(Position.X + 170f, Position.Y + 5f);
+			((CitizenFX.Core.UI.Rectangle)ProgressBar).Position = new PointF(Position.X + 5f, Position.Y + 5f);
+			((CitizenFX.Core.UI.Rectangle)Background).Draw();
+			((CitizenFX.Core.UI.Text)Text).Draw();
+			((CitizenFX.Core.UI.Rectangle)ProgressBar).Draw();
 		}
 	}
 }

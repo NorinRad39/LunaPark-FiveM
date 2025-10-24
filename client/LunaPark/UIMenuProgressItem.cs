@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using CitizenFX.Core;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using Rectangle = CitizenFX.Core.UI.Rectangle;
 
 namespace Client.net.LunaPark
 {
@@ -63,7 +64,7 @@ namespace Client.net.LunaPark
 
 		protected void UpdateBar()
 		{
-			((Rectangle)_bar).set_Size(new SizeF((float)Index * (_max / (float)Items), ((Rectangle)_bar).get_Size().Height));
+			((CitizenFX.Core.UI.Rectangle)_bar).Size = new SizeF((float)Index * (_max / (float)Items), ((CitizenFX.Core.UI.Rectangle)_bar).Size.Height);
 		}
 
 		public UIMenuProgressItem(string text, string description, int maxItems, int index, bool counter)
@@ -104,30 +105,36 @@ namespace Client.net.LunaPark
 
 		public override void Position(int y)
 		{
-			((Rectangle)_rectangle).set_Position(new PointF(base.Offset.X, (float)(y + 144) + base.Offset.Y));
+			((Rectangle)_rectangle).Position = new PointF(base.Offset.X, (float)(y + 144) + base.Offset.Y);
 			_selectedSprite.Position = new PointF(0f + base.Offset.X, (float)(y + 144) + base.Offset.Y);
-			((Text)_text).set_Position(new PointF(8f + base.Offset.X, (float)y + 141.5f + base.Offset.Y));
-			((Text)_labelText).set_Position(new PointF(420f + base.Offset.X, (float)y + 141.5f + base.Offset.Y));
+			((Text)_text).Position = new PointF(8f + base.Offset.X, (float)y + 141.5f + base.Offset.Y);
+			((Text)_labelText).Position = new PointF(420f + base.Offset.X, (float)y + 141.5f + base.Offset.Y);
 			_max = 407.5f + (float)base.Parent.WidthOffset;
-			((Rectangle)_background).set_Size(new SizeF(415f + (float)base.Parent.WidthOffset, 14f));
-			((Rectangle)_background).set_Position(new PointF(8f + base.Offset.X, 170f + (float)y + base.Offset.Y));
-			((Rectangle)_bar).set_Position(new PointF(11.75f + base.Offset.X, 172.5f + (float)y + base.Offset.Y));
+			_background.Size = new SizeF(415f + (float)base.Parent.WidthOffset, 14f);
+			_background.Position = new PointF(8f + base.Offset.X, 170f + (float)y + base.Offset.Y);
+			((CitizenFX.Core.UI.Rectangle)_bar).Position = new PointF(11.75f + base.Offset.X, 172.5f + (float)y + base.Offset.Y);
 		}
 
 		public void CalculateProgress(float CursorX)
 		{
-			float Progress = CursorX - ((Rectangle)_bar).get_Position().X;
+			float Progress = CursorX - ((Rectangle)_bar).Position.X;
 			Index = (int)Math.Round((float)Items * ((Progress >= 0f && Progress <= _max) ? Progress : ((Progress < 0f) ? 0f : _max)) / _max);
 		}
 
 		public async void Functions()
 		{
-			if (ScreenTools.IsMouseInBounds(new PointF(((Rectangle)_bar).get_Position().X, ((Rectangle)_bar).get_Position().Y - 7.5f), new SizeF(_max, ((Rectangle)_bar).get_Size().Height + 19f)) && API.IsDisabledControlPressed(0, 24) && !Pressed)
+			if (ScreenTools.IsMouseInBounds(
+					new PointF(((Rectangle)_bar).Position.X, ((Rectangle)_bar).Position.Y - 7.5f),
+					new SizeF(_max, ((Rectangle)_bar).Size.Height + 19f)) &&
+				API.IsDisabledControlPressed(0, 24) && !Pressed)
 			{
 				Pressed = true;
 				Audio.Id = API.GetSoundId();
 				API.PlaySoundFrontend(Audio.Id, Audio.Slider, Audio.Library, true);
-				while (API.IsDisabledControlPressed(0, 24) && ScreenTools.IsMouseInBounds(new PointF(((Rectangle)_bar).get_Position().X, ((Rectangle)_bar).get_Position().Y - 7.5f), new SizeF(_max, ((Rectangle)_bar).get_Size().Height + 19f)))
+				while (API.IsDisabledControlPressed(0, 24) &&
+					   ScreenTools.IsMouseInBounds(
+						   new PointF(((Rectangle)_bar).Position.X, ((Rectangle)_bar).Position.Y - 7.5f),
+						   new SizeF(_max, ((Rectangle)_bar).Size.Height + 19f)))
 				{
 					await BaseScript.Delay(0);
 					SizeF ress = ScreenTools.ResolutionMaintainRatio;
@@ -147,13 +154,13 @@ namespace Client.net.LunaPark
 			base.Draw();
 			if (Selected)
 			{
-				((Rectangle)_background).set_Color(Colors.Black);
-				((Rectangle)_bar).set_Color(Colors.White);
+				((Rectangle)_background).Color = Colors.Black;
+				((Rectangle)_bar).Color = Colors.White;
 			}
 			else
 			{
-				((Rectangle)_background).set_Color(Colors.White);
-				((Rectangle)_bar).set_Color(Colors.Black);
+				((Rectangle)_background).Color = Colors.White;
+				((Rectangle)_bar).Color = Colors.Black;
 			}
 			Functions();
 			((Rectangle)_background).Draw();

@@ -14,7 +14,7 @@ namespace Client.net.LunaPark
 
 		public float Value3 = 0f;
 
-		public float Value4;
+		public float Value4 = 0f;
 
 		public Vector3 Value5 = new Vector3(0f);
 
@@ -22,7 +22,7 @@ namespace Client.net.LunaPark
 
 		public float Value7 = 0f;
 
-		public int Value8;
+		public int Value8 = 0; // Correction : initialisation explicite
 
 		public int Value9 = 0;
 

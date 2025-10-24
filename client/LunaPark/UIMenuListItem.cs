@@ -65,7 +65,7 @@ namespace Client.net.LunaPark
 			_items = items;
 			_arrowLeft = new Sprite("commonmenu", "arrowleft", new PointF(110f, 105f), new SizeF(30f, 30f));
 			_arrowRight = new Sprite("commonmenu", "arrowright", new PointF(280f, 105f), new SizeF(30f, 30f));
-			_itemText = new UIResText("", new PointF(290f, 104f), 0.35f, Colors.White, (Font)0, (Alignment)1)
+			_itemText = new UIResText("", new PointF(290f, 104f), 0.35f, Colors.White, CitizenFX.Core.UI.Font.ChaletLondon, (Alignment)1)
 			{
 				TextAlignment = (Alignment)2
 			};
@@ -76,7 +76,7 @@ namespace Client.net.LunaPark
 		{
 			_arrowLeft.Position = new PointF(300f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(147 + y) + base.Offset.Y);
 			_arrowRight.Position = new PointF(400f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(147 + y) + base.Offset.Y);
-			((Text)_itemText).set_Position(new PointF(300f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(y + 147) + base.Offset.Y));
+			((Text)_itemText).Position = new PointF(300f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(y + 147) + base.Offset.Y);
 			base.Position(y);
 		}
 
@@ -96,9 +96,9 @@ namespace Client.net.LunaPark
 		{
 			base.Draw();
 			string caption = _items[Index].ToString();
-			float offset = ScreenTools.GetTextWidth(caption, ((Text)_itemText).get_Font(), ((Text)_itemText).get_Scale());
-			((Text)_itemText).set_Color((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
-			((Text)_itemText).set_Caption(caption);
+			float offset = ScreenTools.GetTextWidth(caption, _itemText.Font, _itemText.Scale);
+			((Text)_itemText).Color = (!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke);
+			((Text)_itemText).Caption = caption;
 			_arrowLeft.Color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
 			_arrowRight.Color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
 			_arrowLeft.Position = new PointF((float)(375 - (int)offset) + base.Offset.X + (float)base.Parent.WidthOffset, _arrowLeft.Position.Y);
@@ -106,11 +106,11 @@ namespace Client.net.LunaPark
 			{
 				_arrowLeft.Draw();
 				_arrowRight.Draw();
-				((Text)_itemText).set_Position(new PointF(403f + base.Offset.X + (float)base.Parent.WidthOffset, ((Text)_itemText).get_Position().Y));
+				((Text)_itemText).Position = new PointF(403f + base.Offset.X + (float)base.Parent.WidthOffset, ((Text)_itemText).Position.Y);
 			}
 			else
 			{
-				((Text)_itemText).set_Position(new PointF(418f + base.Offset.X + (float)base.Parent.WidthOffset, ((Text)_itemText).get_Position().Y));
+				((Text)_itemText).Position = new PointF(418f + base.Offset.X + (float)base.Parent.WidthOffset, ((Text)_itemText).Position.Y);
 			}
 			((Text)_itemText).Draw();
 		}

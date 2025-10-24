@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
+using Font = CitizenFX.Core.UI.Font; // Ajout de cette ligne pour lever l'ambiguïté
 
 namespace Client.net.LunaPark
 {
@@ -52,12 +53,12 @@ namespace Client.net.LunaPark
 
 		public override async Task Draw()
 		{
-			((Rectangle)_rectangle).set_Size(new SizeF(431 + base.Parent.WidthOffset, 38f));
+			_rectangle.Size = new SizeF(431 + base.Parent.WidthOffset, 38f);
 			_selectedSprite.Size = new SizeF(431 + base.Parent.WidthOffset, 38f);
 			if (Hovered && !Selected)
 			{
-				((Rectangle)_rectangle).set_Color(Color.FromArgb(20, 255, 255, 255));
-				((Rectangle)_rectangle).Draw();
+				_rectangle.Color = Color.FromArgb(20, 255, 255, 255);
+				_rectangle.Draw();
 			}
 			if (Selected)
 			{
@@ -69,10 +70,10 @@ namespace Client.net.LunaPark
 				_selectedSprite.Color = MainColor;
 				_selectedSprite.Draw();
 			}
-			((Text)_text).set_Color((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? HighlightedTextColor : TextColor));
+			_text.Color = (!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? HighlightedTextColor : TextColor);
 			if (LeftBadge != 0)
 			{
-				((Text)_text).set_Position(new PointF(35f + base.Offset.X, ((Text)_text).get_Position().Y));
+				_text.Position = new PointF(35f + base.Offset.X, _text.Position.Y);
 				_badgeLeft.TextureDict = UIMenuItem.BadgeToSpriteLib(LeftBadge);
 				_badgeLeft.TextureName = UIMenuItem.BadgeToSpriteName(LeftBadge, Selected);
 				_badgeLeft.Color = UIMenuItem.BadgeToColor(LeftBadge, Selected);
@@ -80,7 +81,7 @@ namespace Client.net.LunaPark
 			}
 			else
 			{
-				((Text)_text).set_Position(new PointF(8f + base.Offset.X, ((Text)_text).get_Position().Y));
+				_text.Position = new PointF(8f + base.Offset.X, _text.Position.Y);
 			}
 			if (RightBadge != 0)
 			{
@@ -92,12 +93,13 @@ namespace Client.net.LunaPark
 			}
 			if (!string.IsNullOrWhiteSpace(RightLabel))
 			{
-				((Text)_labelText).set_Position(new PointF(420f + base.Offset.X + (float)base.Parent.WidthOffset, ((Text)_labelText).get_Position().Y));
-				((Text)_labelText).set_Caption(RightLabel);
+				_labelText.Position = new PointF(420f + base.Offset.X + (float)base.Parent.WidthOffset, _labelText.Position.Y);
+				_labelText.Caption = RightLabel;
 				UIResText labelText = _labelText;
 				Color color;
-				((Text)_text).set_Color(color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? HighlightedTextColor : TextColor)));
-				((Text)labelText).set_Color(color);
+				color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? HighlightedTextColor : TextColor));
+				_text.Color = color;
+				labelText.Color = color;
 				((Text)_labelText).Draw();
 			}
 			((Text)_text).Draw();

@@ -8,13 +8,13 @@ namespace Client.net.LunaPark
 
 		public float Value0 = 0f;
 
-		public Vector3 Value1;
+		public Vector3 Value1 = Vector3.Zero; // Correction ici
 
 		public float Value2 = 0f;
 
 		public float Value3 = 0f;
 
-		public Vector3 Value4;
+		public Vector3 Value4 = Vector3.Zero; // Correction ici
 
 		public float Value5 = 0f;
 
@@ -22,19 +22,19 @@ namespace Client.net.LunaPark
 
 		public float Value7 = 0f;
 
-		public Vector3 Value8;
+		public Vector3 Value8 = Vector3.Zero; // Correction ici
 
 		public float Value9 = 0f;
 
 		public float Value10 = 0f;
 
-		public Vector3 Value11;
+		public Vector3 Value11 = Vector3.Zero; // Correction ici
 
 		public float Value12 = 0f;
 
 		public float Value13 = 0f;
 
-		public Vector3 Value14;
+		public Vector3 Value14 = Vector3.Zero; // Correction ici
 
 		public float Value15 = 0f;
 

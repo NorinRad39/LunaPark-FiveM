@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using CitizenRectangle = CitizenFX.Core.UI.Rectangle;
 using System.Drawing;
 using CitizenFX.Core.UI;
@@ -63,6 +64,12 @@ namespace Client.net.LunaPark
 				((CitizenRectangle)BackgroundProgressBar).Draw();
 				((CitizenRectangle)ProgressBar).Draw();
 			}
+		}
+
+		public Task UpdateProgressAsync()
+		{
+			// code synchrone
+			return Task.CompletedTask;
 		}
 	}
 }

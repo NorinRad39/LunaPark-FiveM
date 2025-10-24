@@ -33,8 +33,8 @@ namespace Client.net.LunaPark
 		{
 			get
 			{
-				float offset = ((Rectangle)_rectangleBackground).get_Size().Width / (float)_max * (float)_value;
-				((Rectangle)_rectangleSlider).set_Size(new SizeF(offset, ((Rectangle)_rectangleSlider).get_Size().Height));
+				float offset = ((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Size.Width / (float)_max * (float)_value;
+				((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Size = new SizeF(offset, ((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Size.Height);
 				return _value;
 			}
 			set
@@ -100,17 +100,17 @@ namespace Client.net.LunaPark
 			{
 				_rectangleDivider = new UIResRectangle(new Point(0, 0), new Size(2, 20), Color.Transparent);
 			}
-			float offset = ((Rectangle)_rectangleBackground).get_Size().Width / (float)_max * (float)_value;
-			((Rectangle)_rectangleSlider).set_Size(new SizeF(offset, ((Rectangle)_rectangleSlider).get_Size().Height));
+			float offset = ((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Size.Width / (float)_max * (float)_value;
+			((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Size = new SizeF(offset, ((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Size.Height);
 			Audio = new UIMenuGridAudio("CONTINUOUS_SLIDER", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0);
 		}
 
 		public override void Position(int y)
 		{
 			base.Position(y);
-			((Rectangle)_rectangleBackground).set_Position(new PointF(250f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 158.5f + base.Offset.Y));
-			((Rectangle)_rectangleSlider).set_Position(new PointF(250f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 158.5f + base.Offset.Y));
-			((Rectangle)_rectangleDivider).set_Position(new PointF(323.5f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(y + 153) + base.Offset.Y));
+			((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Position = new PointF(250f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 158.5f + base.Offset.Y);
+			((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Position = new PointF(250f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 158.5f + base.Offset.Y);
+			((CitizenFX.Core.UI.Rectangle)_rectangleDivider).Position = new PointF(323.5f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(y + 153) + base.Offset.Y);
 			_arrowLeft.Position = new PointF(225f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 150.5f + base.Offset.Y);
 			_arrowRight.Position = new PointF(400f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 150.5f + base.Offset.Y);
 		}
@@ -123,19 +123,28 @@ namespace Client.net.LunaPark
 
 		public async void Functions()
 		{
-			if (ScreenTools.IsMouseInBounds(new PointF(((Rectangle)_rectangleBackground).get_Position().X, ((Rectangle)_rectangleBackground).get_Position().Y), new SizeF(150f, ((Rectangle)_rectangleBackground).get_Size().Height)))
+			if (ScreenTools.IsMouseInBounds(
+					new PointF(
+						((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Position.X,
+						((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Position.Y),
+					new SizeF(150f, ((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Size.Height)))
 			{
 				if (API.IsDisabledControlPressed(0, 24) && !Pressed)
 				{
 					Pressed = true;
 					Audio.Id = API.GetSoundId();
 					API.PlaySoundFrontend(Audio.Id, Audio.Slider, Audio.Library, true);
-					while (API.IsDisabledControlPressed(0, 24) && ScreenTools.IsMouseInBounds(new PointF(((Rectangle)_rectangleBackground).get_Position().X, ((Rectangle)_rectangleBackground).get_Position().Y), new SizeF(150f, ((Rectangle)_rectangleBackground).get_Size().Height)))
+					while (API.IsDisabledControlPressed(0, 24) &&
+						   ScreenTools.IsMouseInBounds(
+							   new PointF(
+								   ((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Position.X,
+								   ((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Position.Y),
+							   new SizeF(150f, ((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Size.Height)))
 					{
 						await BaseScript.Delay(0);
 						SizeF ress = ScreenTools.ResolutionMaintainRatio;
 						float CursorX = API.GetDisabledControlNormal(0, 239) * ress.Width;
-						float Progress = CursorX - ((Rectangle)_rectangleSlider).get_Position().X;
+						float Progress = CursorX - ((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Position.X;
 						Value = (int)Math.Round((float)_max * ((Progress >= 0f && Progress <= 150f) ? Progress : ((Progress < 0f) ? 0f : 150f)) / 150f);
 						SliderProgressChanged();
 					}
@@ -166,9 +175,9 @@ namespace Client.net.LunaPark
 			_arrowRight.Color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
 			_arrowLeft.Draw();
 			_arrowRight.Draw();
-			((Rectangle)_rectangleBackground).Draw();
-			((Rectangle)_rectangleSlider).Draw();
-			((Rectangle)_rectangleDivider).Draw();
+			((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Draw();
+			((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Draw();
+			((CitizenFX.Core.UI.Rectangle)_rectangleDivider).Draw();
 			Functions();
 		}
 	}

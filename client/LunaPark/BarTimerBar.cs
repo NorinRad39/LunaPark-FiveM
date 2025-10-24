@@ -13,7 +13,6 @@ namespace Client.net.LunaPark
 
 		public BarTimerBar(string label) : base(label)
 		{
-			// Initialisation de BarTimerBar
 		}
 
 		public override void Draw(int interval)

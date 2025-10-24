@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
+using CitizenRectangle = CitizenFX.Core.UI.Rectangle;
 
 namespace Client.net.LunaPark
 {
@@ -105,9 +106,9 @@ namespace Client.net.LunaPark
 
 		public override void Position(int y)
 		{
-			((Rectangle)_rectangleBackground).set_Position(new PointF(250f + base.Offset.X, (float)(y + 158) + base.Offset.Y));
-			((Rectangle)_rectangleSlider).set_Position(new PointF(250f + base.Offset.X, (float)(y + 158) + base.Offset.Y));
-			((Rectangle)_rectangleDivider).set_Position(new PointF(323f + base.Offset.X, (float)(y + 153) + base.Offset.Y));
+			_rectangleBackground.Position = new PointF(250f + base.Offset.X, (float)(y + 158) + base.Offset.Y);
+			_rectangleSlider.Position = new PointF(250f + base.Offset.X, (float)(y + 158) + base.Offset.Y);
+			_rectangleDivider.Position = new PointF(323f + base.Offset.X, (float)(y + 153) + base.Offset.Y);
 			_arrowLeft.Position = new PointF(235f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(155 + y) + base.Offset.Y);
 			_arrowRight.Position = new PointF(400f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(155 + y) + base.Offset.Y);
 			base.Position(y);
@@ -118,13 +119,13 @@ namespace Client.net.LunaPark
 			base.Draw();
 			_arrowLeft.Color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
 			_arrowRight.Color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
-			float offset = 176f + base.Offset.X + ((Rectangle)_rectangleBackground).get_Size().Width - ((Rectangle)_rectangleSlider).get_Size().Width;
-			((Rectangle)_rectangleSlider).set_Position(new PointF((int)(offset + (float)_value / (float)_max * 73f), ((Rectangle)_rectangleSlider).get_Position().Y));
+			float offset = 176f + base.Offset.X + _rectangleBackground.Size.Width - _rectangleSlider.Size.Width;
+			((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Position = new PointF((int)(offset + (float)_value / (float)_max * 73f), ((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Position.Y);
 			_arrowLeft.Draw();
 			_arrowRight.Draw();
-			((Rectangle)_rectangleBackground).Draw();
-			((Rectangle)_rectangleSlider).Draw();
-			((Rectangle)_rectangleDivider).Draw();
+			((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Draw();
+			((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Draw();
+			((CitizenFX.Core.UI.Rectangle)_rectangleDivider).Draw();
 		}
 
 		internal virtual void SliderChanged()

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
+using Font = CitizenFX.Core.UI.Font; // Ajout de cette ligne pour lever l'ambiguïté
 
 namespace Client.net.LunaPark
 {
@@ -37,22 +38,22 @@ namespace Client.net.LunaPark
 
 		public float GetPercentage(int ItemId)
 		{
-			return ((Rectangle)Items[ItemId].ProgressBar).get_Size().Width * 2f;
+			return ((CitizenFX.Core.UI.Rectangle)Items[ItemId].ProgressBar).Size.Width * 2f;
 		}
 
 		public void SetPercentage(int ItemId, float number)
 		{
 			if (number <= 0f)
 			{
-				((Rectangle)Items[ItemId].ProgressBar).set_Size(new SizeF(0f, ((Rectangle)Items[ItemId].ProgressBar).get_Size().Height));
+				((CitizenFX.Core.UI.Rectangle)Items[ItemId].ProgressBar).Size = new SizeF(0f, ((CitizenFX.Core.UI.Rectangle)Items[ItemId].ProgressBar).Size.Height);
 			}
 			else if (number <= 100f)
 			{
-				((Rectangle)Items[ItemId].ProgressBar).set_Size(new SizeF(number * 2f, ((Rectangle)Items[ItemId].ProgressBar).get_Size().Height));
+				((CitizenFX.Core.UI.Rectangle)Items[ItemId].ProgressBar).Size = new SizeF(number * 2f, ((CitizenFX.Core.UI.Rectangle)Items[ItemId].ProgressBar).Size.Height);
 			}
 			else
 			{
-				((Rectangle)Items[ItemId].ProgressBar).set_Size(new SizeF(200f, ((Rectangle)Items[ItemId].ProgressBar).get_Size().Height));
+				((CitizenFX.Core.UI.Rectangle)Items[ItemId].ProgressBar).Size = new SizeF(200f, ((CitizenFX.Core.UI.Rectangle)Items[ItemId].ProgressBar).Size.Height);
 			}
 		}
 
@@ -64,15 +65,15 @@ namespace Client.net.LunaPark
 			for (int i = 0; i < Items.Count; i++)
 			{
 				int OffsetItemCount = 40 * (i + 1);
-				((Text)Items[i].Text).set_Position(new PointF(ParentOffsetX + (float)(ParentOffsetWidth / 2) + 13f, y - 34f + (float)OffsetItemCount));
-				((Rectangle)Items[i].BackgroundProgressBar).set_Position(new PointF(ParentOffsetX + (float)(ParentOffsetWidth / 2) + 200f, y - 22f + (float)OffsetItemCount));
-				((Rectangle)Items[i].ProgressBar).set_Position(new PointF(ParentOffsetX + (float)(ParentOffsetWidth / 2) + 200f, y - 22f + (float)OffsetItemCount));
+				((Text)Items[i].Text).Position = new PointF(ParentOffsetX + (float)(ParentOffsetWidth / 2) + 13f, y - 34f + (float)OffsetItemCount);
+				((CitizenFX.Core.UI.Rectangle)Items[i].BackgroundProgressBar).Position = new PointF(ParentOffsetX + (float)(ParentOffsetWidth / 2) + 200f, y - 22f + (float)OffsetItemCount);
+				((CitizenFX.Core.UI.Rectangle)Items[i].ProgressBar).Position = new PointF(ParentOffsetX + (float)(ParentOffsetWidth / 2) + 200f, y - 22f + (float)OffsetItemCount);
 				if (Divider)
 				{
 					for (int _ = 0; _ < Items[i].Divider.Length; _++)
 					{
 						int DividerOffsetWidth = _ * 40;
-						((Rectangle)Items[i].Divider[_]).set_Position(new PointF(ParentOffsetX + (float)(ParentOffsetWidth / 2) + 200f + (float)DividerOffsetWidth, y - 22f + (float)OffsetItemCount));
+						((CitizenFX.Core.UI.Rectangle)Items[i].Divider[_]).Position = new PointF(ParentOffsetX + (float)(ParentOffsetWidth / 2) + 200f + (float)DividerOffsetWidth, y - 22f + (float)OffsetItemCount);
 						Background.Size = new SizeF(431 + base.ParentItem.Parent.WidthOffset, 47 + OffsetItemCount - 39);
 					}
 				}
@@ -85,11 +86,11 @@ namespace Client.net.LunaPark
 			for (int i = 0; i < Items.Count; i++)
 			{
 				((Text)Items[i].Text).Draw();
-				((Rectangle)Items[i].BackgroundProgressBar).Draw();
-				((Rectangle)Items[i].ProgressBar).Draw();
+				((CitizenFX.Core.UI.Rectangle)Items[i].BackgroundProgressBar).Draw();
+				((CitizenFX.Core.UI.Rectangle)Items[i].ProgressBar).Draw();
 				for (int _ = 0; _ < Items[i].Divider.Length; _++)
 				{
-					((Rectangle)Items[i].Divider[_]).Draw();
+					((CitizenFX.Core.UI.Rectangle)Items[i].Divider[_]).Draw();
 				}
 			}
 			await Task.FromResult(0);

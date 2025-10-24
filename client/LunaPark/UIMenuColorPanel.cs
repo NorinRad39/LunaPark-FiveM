@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core.Native;
 using CitizenFX.Core.UI;
+using FXRectangle = CitizenFX.Core.UI.Rectangle;
 
 namespace Client.net.LunaPark
 {
@@ -111,7 +112,7 @@ namespace Client.net.LunaPark
 			LeftArrow = new Sprite("commonmenu", "arrowleft", new Point(0, 0), new Size(30, 30));
 			RightArrow = new Sprite("commonmenu", "arrowright", new Point(0, 0), new Size(30, 30));
 			SelectedRectangle = new UIResRectangle(new Point(0, 0), new Size(44, 8), Color.FromArgb(255, 255, 255));
-			Text = new UIResText(Title + " [1 / " + Colors.Count + "]", new Point(0, 0), 0.35f, Color.FromArgb(255, 255, 255, 255), (Font)0, (Alignment)0);
+			Text = new UIResText(Title + " [1 / " + Colors.Count + "]", new Point(0, 0), 0.35f, Color.FromArgb(255, 255, 255, 255), CitizenFX.Core.UI.Font.ChaletLondon, (Alignment)0);
 			base.ParentItem = null;
 			for (int Index = 0; Index < Colors.Count && Index < 9; Index++)
 			{
@@ -132,15 +133,15 @@ namespace Client.net.LunaPark
 			Background.Position = new PointF(ParentOffsetX, 35f + y);
 			for (int Index = 0; Index < Bar.Count; Index++)
 			{
-				((Rectangle)Bar[Index]).set_Position(new PointF(15f + 44.5f * (float)Index + ParentOffsetX + ParentOffsetWidth / 2f, 90f + y));
+				Bar[Index].Position = new PointF(15f + 44.5f * (float)Index + ParentOffsetX + ParentOffsetWidth / 2f, 90f + y);
 			}
-			((Rectangle)SelectedRectangle).set_Position(new PointF(15f + 44.5f * (float)(CurrentSelection - Data.Pagination.Min) + ParentOffsetX + ParentOffsetWidth / 2f, 77f + y));
+			SelectedRectangle.Position = new PointF(15f + 44.5f * (float)(CurrentSelection - Data.Pagination.Min) + ParentOffsetX + ParentOffsetWidth / 2f, 77f + y);
 			if (EnableArrow)
 			{
 				LeftArrow.Position = new PointF(7.5f + ParentOffsetX + ParentOffsetWidth / 2f, 50f + y);
 				RightArrow.Position = new PointF(393.5f + ParentOffsetX + ParentOffsetWidth / 2f, 50f + y);
 			}
-			((Text)Text).set_Position(new PointF(215.5f + ParentOffsetX + ParentOffsetWidth / 2f, 50f + y));
+			Text.Position = new PointF(215.5f + ParentOffsetX + ParentOffsetWidth / 2f, 50f + y);
 		}
 
 		private void UpdateSelection(bool update)
@@ -150,12 +151,12 @@ namespace Client.net.LunaPark
 				base.ParentItem.Parent.ListChange(base.ParentItem, base.ParentItem.Index);
 				base.ParentItem.ListChangedTrigger(base.ParentItem.Index);
 			}
-			((Rectangle)SelectedRectangle).set_Position(new PointF(15f + 44.5f * (float)(CurrentSelection - Data.Pagination.Min) + base.ParentItem.Offset.X, ((Rectangle)SelectedRectangle).get_Position().Y));
+			((CitizenFX.Core.UI.Rectangle)SelectedRectangle).Position = new PointF(15f + 44.5f * (float)(CurrentSelection - Data.Pagination.Min) + base.ParentItem.Offset.X, ((CitizenFX.Core.UI.Rectangle)SelectedRectangle).Position.Y);
 			for (int index = 0; index < 9; index++)
 			{
-				((Rectangle)Bar[index]).set_Color(Data.Items[Data.Pagination.Min + index]);
+				((CitizenFX.Core.UI.Rectangle)Bar[index]).Color = Data.Items[Data.Pagination.Min + index];
 			}
-			((Text)Text).set_Caption(Data.Title + " [" + (CurrentSelection + 1) + " / " + Data.Items.Count + "]");
+			Text.Caption = Data.Title + " [" + (CurrentSelection + 1) + " / " + Data.Items.Count + "]";
 		}
 
 		private void Functions()
@@ -171,7 +172,7 @@ namespace Client.net.LunaPark
 			}
 			for (int Index = 0; Index < Bar.Count; Index++)
 			{
-				if (ScreenTools.IsMouseInBounds(new PointF(((Rectangle)Bar[Index]).get_Position().X + safezoneOffset.X, ((Rectangle)Bar[Index]).get_Position().Y + safezoneOffset.Y), ((Rectangle)Bar[Index]).get_Size()) && (API.IsDisabledControlJustPressed(0, 24) || API.IsControlJustPressed(0, 24)))
+				if (ScreenTools.IsMouseInBounds(new PointF(((CitizenFX.Core.UI.Rectangle)Bar[Index]).Position.X + safezoneOffset.X, ((CitizenFX.Core.UI.Rectangle)Bar[Index]).Position.Y + safezoneOffset.Y), ((CitizenFX.Core.UI.Rectangle)Bar[Index]).Size) && (API.IsDisabledControlJustPressed(0, 24) || API.IsControlJustPressed(0, 24)))
 				{
 					CurrentSelection = Data.Pagination.Min + Index;
 					UpdateSelection(update: true);
@@ -210,7 +211,7 @@ namespace Client.net.LunaPark
 			else
 			{
 				Data.Index--;
-				UpdateSelection(update: true);
+			 UpdateSelection(update: true);
 			}
 		}
 
@@ -262,9 +263,9 @@ namespace Client.net.LunaPark
 				((Text)Text).Draw();
 				for (int Index = 0; Index < Bar.Count; Index++)
 				{
-					((Rectangle)Bar[Index]).Draw();
+					((CitizenFX.Core.UI.Rectangle)Bar[Index]).Draw();
 				}
-				((Rectangle)SelectedRectangle).Draw();
+				((CitizenFX.Core.UI.Rectangle)SelectedRectangle).Draw();
 				Functions();
 			}
 			await Task.FromResult(0);

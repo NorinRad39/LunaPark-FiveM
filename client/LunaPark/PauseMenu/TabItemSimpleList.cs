@@ -1,7 +1,13 @@
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
+using System.Drawing; // Ajouté pour SizeF et PointF
 using CitizenFX.Core.UI;
+// using CitizenFX.Core.UI.Elements; // Supprimé car ce namespace n'existe pas
+// Supprimez ou commentez la ligne suivante si elle existe :
+// using Rectangle = CitizenFX.Core.UI.Rectangle;
+
+// Ajoutez ceci pour éviter l'ambiguïté avec Font
+using Font = CitizenFX.Core.UI.Font;
 
 namespace Client.net.LunaPark.PauseMenu
 {
@@ -26,10 +32,14 @@ namespace Client.net.LunaPark.PauseMenu
 			int rectSize = (int)(base.BottomRight.X - base.TopLeft.X);
 			for (int i = 0; i < Dictionary.Count; i++)
 			{
-				((Rectangle)new UIResRectangle(new PointF(base.TopLeft.X, base.TopLeft.Y + (float)(40 * i)), new SizeF(rectSize, 40f), (i % 2 == 0) ? Color.FromArgb(alpha, 0, 0, 0) : Color.FromArgb(blackAlpha, 0, 0, 0))).Draw();
+				(new CitizenFX.Core.UI.Rectangle(
+					new PointF(base.TopLeft.X, base.TopLeft.Y + (float)(40 * i)),
+					new SizeF(rectSize, 40f),
+					(i % 2 == 0) ? Color.FromArgb(alpha, 0, 0, 0) : Color.FromArgb(blackAlpha, 0, 0, 0)
+				)).Draw();
 				KeyValuePair<string, string> item = Dictionary.ElementAt(i);
 				((Text)new UIResText(item.Key, new PointF(base.TopLeft.X + 6f, base.TopLeft.Y + 5f + (float)(40 * i)), 0.35f, Color.FromArgb(fullAlpha, Colors.White))).Draw();
-				((Text)new UIResText(item.Value, new PointF(base.BottomRight.X - 6f, base.TopLeft.Y + 5f + (float)(40 * i)), 0.35f, Color.FromArgb(fullAlpha, Colors.White), (Font)0, (Alignment)2)).Draw();
+				((Text)new UIResText(item.Value, new PointF(base.BottomRight.X - 6f, base.TopLeft.Y + 5f + (float)(40 * i)), 0.35f, Color.FromArgb(fullAlpha, Colors.White), Font.ChaletLondon, (Alignment)2)).Draw();
 			}
 		}
 	}

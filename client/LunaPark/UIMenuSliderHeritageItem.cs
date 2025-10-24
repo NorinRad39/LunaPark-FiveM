@@ -16,9 +16,9 @@ namespace Client.net.LunaPark
 		public override void Position(int y)
 		{
 			base.Position(y);
-			((Rectangle)_rectangleBackground).set_Position(new PointF(250f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 158.5f + base.Offset.Y));
-			((Rectangle)_rectangleSlider).set_Position(new PointF(250f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 158.5f + base.Offset.Y));
-			((Rectangle)_rectangleDivider).set_Position(new PointF(323.5f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(y + 153) + base.Offset.Y));
+			((CitizenFX.Core.UI.Rectangle)_rectangleBackground).Position = new PointF(250f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 158.5f + base.Offset.Y);
+			((CitizenFX.Core.UI.Rectangle)_rectangleSlider).Position = new PointF(250f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 158.5f + base.Offset.Y);
+			((CitizenFX.Core.UI.Rectangle)_rectangleDivider).Position = new PointF(323.5f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(y + 153) + base.Offset.Y);
 			_arrowLeft.Position = new PointF(217f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 143.5f + base.Offset.Y);
 			_arrowRight.Position = new PointF(395f + base.Offset.X + (float)base.Parent.WidthOffset, (float)y + 143.5f + base.Offset.Y);
 		}

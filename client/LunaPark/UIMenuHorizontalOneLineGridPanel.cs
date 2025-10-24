@@ -45,8 +45,8 @@ namespace Client.net.LunaPark
 			Grid = new Sprite("NativeUI", "horizontal_grid", new Point(0, 0), new Size(200, 200), 0f, Color.FromArgb(255, 255, 255));
 			Circle = new Sprite("mpinventory", "in_world_circle", new Point(0, 0), new Size(20, 20), 0f, Color.FromArgb(255, 255, 255));
 			Audio = new UIMenuGridAudio("CONTINUOUS_SLIDER", "HUD_FRONTEND_DEFAULT_SOUNDSET", 0);
-			Left = new UIResText(LeftText ?? "Left", new Point(0, 0), 0.35f, Color.FromArgb(255, 255, 255), (Font)0, (Alignment)0);
-			Right = new UIResText(RightText ?? "Right", new Point(0, 0), 0.35f, Color.FromArgb(255, 255, 255), (Font)0, (Alignment)0);
+			Left = new UIResText(LeftText ?? "Left", new Point(0, 0), 0.35f, Color.FromArgb(255, 255, 255), CitizenFX.Core.UI.Font.ChaletLondon, Alignment.Center);
+			Right = new UIResText(RightText ?? "Right", new Point(0, 0), 0.35f, Color.FromArgb(255, 255, 255), CitizenFX.Core.UI.Font.ChaletLondon, Alignment.Center);
 			SetCirclePosition = new PointF(CirclePositionX, 0.5f);
 		}
 
@@ -56,8 +56,8 @@ namespace Client.net.LunaPark
 			int ParentOffsetWidth = base.ParentItem.Parent.WidthOffset;
 			Background.Position = new PointF(ParentOffsetX, y);
 			Grid.Position = new PointF(ParentOffsetX + 115.5f + (float)(ParentOffsetWidth / 2), 37.5f + y);
-			((Text)Left).set_Position(new PointF(ParentOffsetX + 57.75f + (float)(ParentOffsetWidth / 2), 120f + y));
-			((Text)Right).set_Position(new PointF(ParentOffsetX + 373.25f + (float)(ParentOffsetWidth / 2), 120f + y));
+			Left.Position = new PointF(ParentOffsetX + 57.75f + (float)(ParentOffsetWidth / 2), 120f + y);
+			Right.Position = new PointF(ParentOffsetX + 373.25f + (float)(ParentOffsetWidth / 2), 120f + y);
 			if (!CircleLocked)
 			{
 				CircleLocked = true;

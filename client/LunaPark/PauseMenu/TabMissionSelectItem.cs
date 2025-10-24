@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using CitizenFX.Core;
 using CitizenFX.Core.UI;
+using Font = CitizenFX.Core.UI.Font;
 
 namespace Client.net.LunaPark.PauseMenu
 {
@@ -106,7 +107,7 @@ namespace Client.net.LunaPark.PauseMenu
 				int counter = 0;
 				for (int i = _minItem; i < Math.Min(Heists.Count, _maxItem); i++)
 				{
-					((Rectangle)new UIResRectangle(base.SafeSize.AddPoints(new PointF(0f, (itemSize.Height + 3f) * (float)counter)), itemSize, (Index == i && Focused) ? Color.FromArgb(fullAlpha, Colors.White) : Color.FromArgb(blackAlpha, Colors.Black))).Draw();
+					((CitizenFX.Core.UI.Rectangle)new UIResRectangle(base.SafeSize.AddPoints(new PointF(0f, (itemSize.Height + 3f) * (float)counter)), itemSize, (Index == i && Focused) ? Color.FromArgb(fullAlpha, Colors.White) : Color.FromArgb(blackAlpha, Colors.Black))).Draw();
 					((Text)new UIResText(Heists[i].Name, base.SafeSize.AddPoints(new PointF(6f, 5f + (itemSize.Height + 3f) * (float)counter)), 0.35f, Color.FromArgb(fullAlpha, (Index == i && Focused) ? Colors.Black : Colors.White))).Draw();
 					counter++;
 				}
@@ -129,11 +130,11 @@ namespace Client.net.LunaPark.PauseMenu
 					};
 					newLogo.Draw();
 				}
-				((Rectangle)new UIResRectangle(new PointF((float)(int)res.Width - base.SafeSize.X - 512f, base.SafeSize.Y + 256f), new SizeF(512f, 40f), Color.FromArgb(fullAlpha, Colors.Black))).Draw();
+				((CitizenFX.Core.UI.Rectangle)new UIResRectangle(new PointF((float)(int)res.Width - base.SafeSize.X - 512f, base.SafeSize.Y + 256f), new SizeF(512f, 40f), Color.FromArgb(fullAlpha, Colors.Black))).Draw();
 				((Text)new UIResText(Heists[Index].Name, new PointF((float)(int)res.Width - base.SafeSize.X - 4f, base.SafeSize.Y + 260f), 0.5f, Color.FromArgb(fullAlpha, Colors.White), (Font)1, (Alignment)2)).Draw();
 				for (int j = 0; j < Heists[Index].ValueList.Count; j++)
 				{
-					((Rectangle)new UIResRectangle(new PointF((float)(int)res.Width - base.SafeSize.X - 512f, base.SafeSize.Y + 256f + 40f + (float)(40 * j)), new SizeF(512f, 40f), (j % 2 == 0) ? Color.FromArgb(alpha, 0, 0, 0) : Color.FromArgb(blackAlpha, 0, 0, 0))).Draw();
+					((CitizenFX.Core.UI.Rectangle)new UIResRectangle(new PointF((float)(int)res.Width - base.SafeSize.X - 512f, base.SafeSize.Y + 256f + 40f + (float)(40 * j)), new SizeF(512f, 40f), (j % 2 == 0) ? Color.FromArgb(alpha, 0, 0, 0) : Color.FromArgb(blackAlpha, 0, 0, 0))).Draw();
 					string text = Heists[Index].ValueList[j].Item1;
 					string label = Heists[Index].ValueList[j].Item2;
 					((Text)new UIResText(text, new PointF((float)(int)res.Width - base.SafeSize.X - 506f, base.SafeSize.Y + 260f + 42f + (float)(40 * j)), 0.35f, Color.FromArgb(fullAlpha, Colors.White))).Draw();
@@ -142,12 +143,12 @@ namespace Client.net.LunaPark.PauseMenu
 				if (!string.IsNullOrEmpty(Heists[Index].Description))
 				{
 					int propLen = Heists[Index].ValueList.Count;
-					((Rectangle)new UIResRectangle(new PointF((float)(int)res.Width - base.SafeSize.X - 512f, base.SafeSize.Y + 256f + 42f + (float)(40 * propLen)), new SizeF(512f, 2f), Color.FromArgb(fullAlpha, Colors.White))).Draw();
+					((CitizenFX.Core.UI.Rectangle)new UIResRectangle(new PointF((float)(int)res.Width - base.SafeSize.X - 512f, base.SafeSize.Y + 256f + 42f + (float)(40 * propLen)), new SizeF(512f, 2f), Color.FromArgb(fullAlpha, Colors.White))).Draw();
 					((Text)new UIResText(Heists[Index].Description, new PointF((float)(int)res.Width - base.SafeSize.X - 508f, base.SafeSize.Y + 256f + 45f + (float)(40 * propLen) + 4f), 0.35f, Color.FromArgb(fullAlpha, Colors.White))
 					{
 						Wrap = 508f
 					}).Draw();
-					((Rectangle)new UIResRectangle(new PointF((float)(int)res.Width - base.SafeSize.X - 512f, base.SafeSize.Y + 256f + 44f + (float)(40 * propLen)), new SizeF(512f, 45 * (int)(ScreenTools.GetTextWidth(Heists[Index].Description, (Font)0, 0.35f) / 500f)), Color.FromArgb(blackAlpha, 0, 0, 0))).Draw();
+					((CitizenFX.Core.UI.Rectangle)new UIResRectangle(new PointF((float)(int)res.Width - base.SafeSize.X - 512f, base.SafeSize.Y + 256f + 44f + (float)(40 * propLen)), new SizeF(512f, 45 * (int)(ScreenTools.GetTextWidth(Heists[Index].Description, (Font)0, 0.35f) / 500f)), Color.FromArgb(blackAlpha, 0, 0, 0))).Draw();
 				}
 			}
 		}

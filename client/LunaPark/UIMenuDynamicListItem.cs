@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Threading.Tasks;
 using CitizenFX.Core.UI;
+using Font = CitizenFX.Core.UI.Font;
 
 namespace Client.net.LunaPark
 {
@@ -44,7 +45,7 @@ namespace Client.net.LunaPark
 		{
 			_arrowLeft.Position = new PointF(300f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(147 + y) + base.Offset.Y);
 			_arrowRight.Position = new PointF(400f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(147 + y) + base.Offset.Y);
-			((Text)_itemText).set_Position(new PointF(300f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(y + 147) + base.Offset.Y));
+			_itemText.Position = new PointF(300f + base.Offset.X + (float)base.Parent.WidthOffset, (float)(y + 147) + base.Offset.Y);
 			base.Position(y);
 		}
 
@@ -52,9 +53,9 @@ namespace Client.net.LunaPark
 		{
 			base.Draw();
 			string caption = CurrentListItem;
-			float offset = ScreenTools.GetTextWidth(caption, ((Text)_itemText).get_Font(), ((Text)_itemText).get_Scale());
-			((Text)_itemText).set_Color((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
-			((Text)_itemText).set_Caption(caption);
+			float offset = ScreenTools.GetTextWidth(caption, _itemText.Font, _itemText.Scale);
+			_itemText.Color = (!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke);
+			_itemText.Caption = caption;
 			_arrowLeft.Color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
 			_arrowRight.Color = ((!Enabled) ? Color.FromArgb(163, 159, 148) : (Selected ? Colors.Black : Colors.WhiteSmoke));
 			_arrowLeft.Position = new PointF((float)(375 - (int)offset) + base.Offset.X + (float)base.Parent.WidthOffset, _arrowLeft.Position.Y);
@@ -62,13 +63,13 @@ namespace Client.net.LunaPark
 			{
 				_arrowLeft.Draw();
 				_arrowRight.Draw();
-				((Text)_itemText).set_Position(new PointF(403f + base.Offset.X + (float)base.Parent.WidthOffset, ((Text)_itemText).get_Position().Y));
+				_itemText.Position = new PointF(403f + base.Offset.X + (float)base.Parent.WidthOffset, _itemText.Position.Y);
 			}
 			else
 			{
-				((Text)_itemText).set_Position(new PointF(418f + base.Offset.X + (float)base.Parent.WidthOffset, ((Text)_itemText).get_Position().Y));
+				_itemText.Position = new PointF(418f + base.Offset.X + (float)base.Parent.WidthOffset, _itemText.Position.Y);
 			}
-			((Text)_itemText).Draw();
+			_itemText.Draw();
 		}
 
 		public override void SetRightBadge(BadgeStyle badge)

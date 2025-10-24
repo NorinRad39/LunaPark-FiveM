@@ -72,7 +72,7 @@ namespace Client.net.LunaPark.PauseMenu
 			this.DrawInstructionalButtons?.Invoke(this, EventArgs.Empty);
 			if (DrawBg)
 			{
-				((Rectangle)new UIResRectangle(TopLeft, rectSize, Color.FromArgb((Focused || !FadeInWhenFocused) ? 200 : 120, 0, 0, 0))).Draw();
+				((CitizenFX.Core.UI.Rectangle)new UIResRectangle(TopLeft, rectSize, Color.FromArgb((Focused || !FadeInWhenFocused) ? 200 : 120, 0, 0, 0))).Draw();
 				int titleSize = 100;
 				RockstarTile.Size = new SizeF(titleSize, titleSize);
 				float cols = rectSize.Width / (float)titleSize;
